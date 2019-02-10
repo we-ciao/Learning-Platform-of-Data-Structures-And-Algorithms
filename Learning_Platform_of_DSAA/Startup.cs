@@ -25,6 +25,12 @@ namespace Learning_Platform_of_DSAA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connection = Configuration.GetConnectionString("SqlServer");
+            services.AddDbContext<EntityDbContext>(options =>
+                options.UseSqlServer(connection, b => b.MigrationsAssembly("Learning_Platform_of_DSAA")));
+            services.AddMvc();
+            
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -34,12 +40,6 @@ namespace Learning_Platform_of_DSAA
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-
-            var connection = Configuration.GetConnectionString("SqlServer");
-            services.AddDbContext<EntityDbContext>(options =>
-                options.UseSqlServer(connection, b => b.MigrationsAssembly("Learning_Platform_of_DSAA")));
-            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

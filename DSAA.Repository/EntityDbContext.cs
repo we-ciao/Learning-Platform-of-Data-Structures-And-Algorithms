@@ -12,6 +12,6 @@ namespace DSAA.Repository
             : base(options)
         {
         }
-        public DbSet<User> Uesrs { get; set; }
+        public virtual DbSet<User> Uesrs { get; set; }
     }
 }

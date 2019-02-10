@@ -48,15 +48,18 @@ namespace DSAA.Repository
         [DisplayName("电子邮箱")]
         public String Email { get; set; }
 
-        public DateTime CreateTime { get; set; } = DateTime.Now;
-
-        public virtual ICollection<Group> Groups { get; set; }
-
         /// <summary>
-        /// 用户权限
+        /// 创建时间
         /// </summary>
-        public PermissionType Permission { get; set; }
-
+        [Required]
+        [DisplayName("手机号")]
+        public String Phone { get; set; } 
+        
+       /// <summary>
+       /// 用户组
+       /// </summary>
+        public virtual ICollection<Group> Groups { get; set; }
+        
         /// <summary>
         /// 题目提交数
         /// </summary>
@@ -80,7 +83,7 @@ namespace DSAA.Repository
         /// <summary>
         /// 注册时间
         /// </summary>
-        public DateTime CreateDate { get; set; }
+        public DateTime CreateDate { get; set; } = DateTime.Now;
 
         /// <summary>
         /// 最后登录IP

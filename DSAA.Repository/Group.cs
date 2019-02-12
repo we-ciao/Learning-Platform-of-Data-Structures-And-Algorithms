@@ -5,6 +5,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DSAA.Repository
 {
+    /// <summary>
+    /// 用户组实体类
+    /// </summary>
+    [Serializable]
     public class Group
     {
         public Int32 Id { get; set; }

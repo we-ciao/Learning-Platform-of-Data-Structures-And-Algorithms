@@ -35,7 +35,7 @@ namespace DSAA.Repository
         /// <summary>
         /// 提交ID
         /// </summary>
-        public Int32 SolutionID { get; set; }
+        public Int32 ID { get; set; }
 
         /// <summary>
         /// 题目ID

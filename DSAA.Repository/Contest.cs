@@ -33,57 +33,57 @@ namespace DSAA.Repository
     public class Contest
     {
         /// <summary>
-        /// 获取或设置竞赛ID
+        /// 竞赛ID
         /// </summary>
-        public Int32 ContestID { get; set; }
+        public Int32 ID { get; set; }
 
         /// <summary>
-        /// 获取或设置竞赛标题
+        /// 竞赛标题
         /// </summary>
         public String Title { get; set; }
 
         /// <summary>
-        /// 获取或设置竞赛描述
+        /// 竞赛描述
         /// </summary>
         public String Description { get; set; }
 
         /// <summary>
-        /// 获取或设置竞赛类型
+        /// 竞赛类型
         /// </summary>
         public ContestType ContestType { get; set; }
 
         /// <summary>
-        /// 获取或设置竞赛开始日期
+        /// 竞赛开始日期
         /// </summary>
         public DateTime StartTime { get; set; }
 
         /// <summary>
-        /// 获取或设置竞赛结束日期
+        /// 竞赛结束日期
         /// </summary>
         public DateTime EndTime { get; set; }
 
         /// <summary>
-        /// 获取或设置竞赛注册开始日期
+        /// 竞赛注册开始日期
         /// </summary>
         public DateTime? RegisterStartTime { get; set; }
 
         /// <summary>
-        /// 获取或设置竞赛注册结束日期
+        /// 竞赛注册结束日期
         /// </summary>
         public DateTime? RegisterEndTime { get; set; }
 
         /// <summary>
-        /// 获取或设置最后更新日期
+        /// 最后更新日期
         /// </summary>
         public DateTime LastDate { get; set; }
 
         /// <summary>
-        /// 获取或设置支持语言
+        /// 支持语言
         /// </summary>
         public String SupportLanguage { get; set; }
 
         /// <summary>
-        /// 获取或设置是否隐藏
+        /// 是否隐藏
         /// </summary>
         public Boolean IsHide { get; set; }
 

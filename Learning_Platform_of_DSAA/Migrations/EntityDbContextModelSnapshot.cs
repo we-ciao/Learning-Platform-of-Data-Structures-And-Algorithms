@@ -19,6 +19,166 @@ namespace Learning_Platform_of_DSAA.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DSAA.Repository.Compiler", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CodeFormat");
+
+                    b.Property<string>("CompilerArgs");
+
+                    b.Property<string>("CompilerPath");
+
+                    b.Property<string>("ExecutionFormat");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<string>("RunnerArgs");
+
+                    b.Property<string>("RunnerPath");
+
+                    b.Property<bool>("isForbidden");
+
+                    b.Property<bool>("isScript");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Compilers");
+                });
+
+            modelBuilder.Entity("DSAA.Repository.Contest", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte>("ContestType");
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("EndTime");
+
+                    b.Property<bool>("IsHide");
+
+                    b.Property<DateTime>("LastDate");
+
+                    b.Property<DateTime?>("RegisterEndTime");
+
+                    b.Property<DateTime?>("RegisterStartTime");
+
+                    b.Property<DateTime>("StartTime");
+
+                    b.Property<string>("SupportLanguage");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Contest");
+                });
+
+            modelBuilder.Entity("DSAA.Repository.Group", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<bool>("isAdmin");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("DSAA.Repository.Problem", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<string>("Hint");
+
+                    b.Property<string>("Input");
+
+                    b.Property<bool>("IsHide");
+
+                    b.Property<DateTime>("LastDate");
+
+                    b.Property<int>("MemoryLimit");
+
+                    b.Property<string>("Output");
+
+                    b.Property<string>("SampleInput");
+
+                    b.Property<string>("SampleOutput");
+
+                    b.Property<int>("SolvedCount");
+
+                    b.Property<int>("SubmitCount");
+
+                    b.Property<int>("TimeLimit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Problem");
+                });
+
+            modelBuilder.Entity("DSAA.Repository.Solution", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CodeLength");
+
+                    b.Property<int>("ContestID");
+
+                    b.Property<int>("ContestProblemID");
+
+                    b.Property<DateTime>("JudgeTime");
+
+                    b.Property<int?>("LanguageTypeId");
+
+                    b.Property<int>("MemoryCost");
+
+                    b.Property<int>("ProblemID");
+
+                    b.Property<byte>("Result");
+
+                    b.Property<string>("SourceCode")
+                        .IsRequired()
+                        .HasMaxLength(6000000);
+
+                    b.Property<string>("SubmitIP");
+
+                    b.Property<DateTime>("SubmitTime");
+
+                    b.Property<int>("TimeCost");
+
+                    b.Property<int>("UserID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("LanguageTypeId");
+
+                    b.ToTable("Solution");
+                });
+
             modelBuilder.Entity("DSAA.Repository.User", b =>
                 {
                     b.Property<int>("Id")
@@ -29,11 +189,11 @@ namespace Learning_Platform_of_DSAA.Migrations
 
                     b.Property<string>("CreateIP");
 
-                    b.Property<DateTime>("CreateTime");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<int?>("GroupsId");
 
                     b.Property<bool>("IsLocked");
 
@@ -49,6 +209,9 @@ namespace Learning_Platform_of_DSAA.Migrations
                     b.Property<string>("PassWord")
                         .IsRequired();
 
+                    b.Property<string>("Phone")
+                        .IsRequired();
+
                     b.Property<double>("Rank");
 
                     b.Property<int>("SolvedCount");
@@ -61,7 +224,23 @@ namespace Learning_Platform_of_DSAA.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GroupsId");
+
                     b.ToTable("Uesrs");
+                });
+
+            modelBuilder.Entity("DSAA.Repository.Solution", b =>
+                {
+                    b.HasOne("DSAA.Repository.Compiler", "LanguageType")
+                        .WithMany()
+                        .HasForeignKey("LanguageTypeId");
+                });
+
+            modelBuilder.Entity("DSAA.Repository.User", b =>
+                {
+                    b.HasOne("DSAA.Repository.Group", "Groups")
+                        .WithMany("Users")
+                        .HasForeignKey("GroupsId");
                 });
 #pragma warning restore 612, 618
         }

@@ -25,11 +25,14 @@ namespace Learning_Platform_of_DSAA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //添加数据库上下文
             var connection = Configuration.GetConnectionString("SqlServer");
             services.AddDbContext<EntityDbContext>(options =>
                 options.UseSqlServer(connection, b => b.MigrationsAssembly("Learning_Platform_of_DSAA")));
             services.AddMvc();
-            
+            //添加IP查询
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

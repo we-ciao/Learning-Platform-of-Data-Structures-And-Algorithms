@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Learning_Platform_of_DSAA",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSAA.Repository", "DSAA.Repository\DSAA.Repository.csproj", "{78C54149-CCCC-409A-87AA-22F4726D6477}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSAA.Service", "DSAA.Service\DSAA.Service.csproj", "{5FBE3807-69C4-4D7C-BC0C-CC985620B235}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSAA.Service", "DSAA.Service\DSAA.Service.csproj", "{5FBE3807-69C4-4D7C-BC0C-CC985620B235}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSAA.Utilities", "DSAA.Utilities\DSAA.Utilities.csproj", "{D955F364-0DC2-4FB4-82B1-7082208764C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{5FBE3807-69C4-4D7C-BC0C-CC985620B235}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FBE3807-69C4-4D7C-BC0C-CC985620B235}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FBE3807-69C4-4D7C-BC0C-CC985620B235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D955F364-0DC2-4FB4-82B1-7082208764C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D955F364-0DC2-4FB4-82B1-7082208764C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D955F364-0DC2-4FB4-82B1-7082208764C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D955F364-0DC2-4FB4-82B1-7082208764C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

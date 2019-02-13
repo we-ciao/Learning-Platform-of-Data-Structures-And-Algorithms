@@ -53,13 +53,13 @@ namespace DSAA.Repository
         /// </summary>
         [Required]
         [DisplayName("手机号")]
-        public String Phone { get; set; } 
-        
-       /// <summary>
-       /// 用户组
-       /// </summary>
-        public virtual ICollection<Group> Groups { get; set; }
-        
+        public String Phone { get; set; }
+
+        /// <summary>
+        /// 用户组
+        /// </summary>
+        public Group Groups { get; set; }
+
         /// <summary>
         /// 题目提交数
         /// </summary>
@@ -108,6 +108,7 @@ namespace DSAA.Repository
         /// <summary>
         /// 获取AC比率
         /// </summary>
+        [NotMapped]
         public virtual Double Ratio
         {
             get { return 100 * (this.SubmitCount > 0 ? (Double)this.SolvedCount / (Double)this.SubmitCount : 0); }

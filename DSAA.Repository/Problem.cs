@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DSAA.Repository
@@ -15,7 +16,7 @@ namespace DSAA.Repository
         /// <summary>
         /// 题目ID
         /// </summary>
-        public Int32 ProblemID { get; set; }
+        public Int32 ID { get; set; }
 
         /// <summary>
         /// 题目标题
@@ -99,6 +100,7 @@ namespace DSAA.Repository
         /// <summary>
         /// 获取AC比率
         /// </summary>
+        [NotMapped]
         public virtual Double Ratio
         {
             get { return 100 * (this.SubmitCount > 0 ? (Double)this.SolvedCount / (Double)this.SubmitCount : 0); }

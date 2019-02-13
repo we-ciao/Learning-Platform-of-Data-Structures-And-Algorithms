@@ -19,7 +19,7 @@ namespace DSAA.Repository
         [Required]
         [MaxLength(50, ErrorMessage = "名字最长允许50个字。")]
         [DisplayName("组名")]
-        public String Name { get; set; }
+        public String GroupName { get; set; }
 
         /// <summary>
         /// 权限
@@ -27,6 +27,7 @@ namespace DSAA.Repository
         public Boolean isAdmin { get; set; } = false;
 
         public virtual ICollection<User> Users { get; set; }
+
     }
 
 }

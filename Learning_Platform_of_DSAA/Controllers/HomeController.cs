@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Learning_Platform_of_DSAA.Models;
-using DSAA.Repository;
+using DSAA.EntityFrameworkCore;
 
 namespace Learning_Platform_of_DSAA.Controllers
 {

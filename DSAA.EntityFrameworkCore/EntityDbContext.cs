@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using DSAA.EntityFrameworkCore.Entity;
 
-namespace DSAA.Repository
+namespace DSAA.EntityFrameworkCore
 {
     public class EntityDbContext : DbContext
     {
-        public EntityDbContext(DbContextOptions<EntityDbContext> options)
-            : base(options)
+        public EntityDbContext(DbContextOptions<EntityDbContext> options) : base(options)
         {
         }
 
@@ -19,6 +19,7 @@ namespace DSAA.Repository
         public virtual DbSet<Problem> Problem { get; set; }
         public virtual DbSet<Solution> Solution { get; set; }
         public virtual DbSet<Contest> Contest { get; set; }
+
 
     }
 }

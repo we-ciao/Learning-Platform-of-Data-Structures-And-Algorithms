@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace DSAA.Repository
+namespace DSAA.EntityFrameworkCore.Entity
 {
     /// <summary>
     /// 竞赛状态
@@ -30,11 +31,12 @@ namespace DSAA.Repository
     /// 竞赛实体类
     /// </summary>
     [Serializable]
-    public class Contest
+    public class Contest : Entity
     {
         /// <summary>
         /// 竞赛ID
         /// </summary>
+        [Key]
         public Int32 ID { get; set; }
 
         /// <summary>

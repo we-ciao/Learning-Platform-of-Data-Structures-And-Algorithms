@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Mvc;
 
-namespace DSAA.Repository
+namespace DSAA.EntityFrameworkCore.Entity
 {
     /// <summary>
     /// 题目实体类
     /// </summary>
     [Serializable]
-    public class Problem
+    public class Problem : Entity
     {
         /// <summary>
         /// 题目ID
         /// </summary>
+        [Key]
         public Int32 ID { get; set; }
 
         /// <summary>

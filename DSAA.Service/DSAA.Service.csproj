@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DSAA.EntityFrameworkCore\DSAA.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\DSAA.Repository\DSAA.Repository.csproj" />
     <ProjectReference Include="..\DSAA.Utilities\DSAA.Utilities.csproj" />
   </ItemGroup>

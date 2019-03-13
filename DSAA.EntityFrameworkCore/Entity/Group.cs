@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace DSAA.Repository
+namespace DSAA.EntityFrameworkCore.Entity
 {
     /// <summary>
     /// 用户组实体类
     /// </summary>
     [Serializable]
-    public class Group
+    public class Group : Entity
     {
+        [Key]
         public Int32 Id { get; set; }
 
         /// <summary>

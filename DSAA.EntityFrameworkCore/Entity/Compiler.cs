@@ -5,17 +5,18 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace DSAA.Repository
+namespace DSAA.EntityFrameworkCore.Entity
 {
     /// <summary>
     /// 编译器实体类
     /// </summary>
     [Serializable]
-    public class Compiler
+    public class Compiler : Entity
     {
         /// <summary>
         /// 编译器ID
         /// </summary>
+        [Key]
         public Int32 Id { get; set; }
 
         /// <summary>

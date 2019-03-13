@@ -5,11 +5,13 @@ VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Learning_Platform_of_DSAA", "Learning_Platform_of_DSAA\Learning_Platform_of_DSAA.csproj", "{B5AA471D-AF8F-4F1F-8B11-0CA8172A3C39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSAA.Repository", "DSAA.Repository\DSAA.Repository.csproj", "{78C54149-CCCC-409A-87AA-22F4726D6477}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSAA.Service", "DSAA.Service\DSAA.Service.csproj", "{5FBE3807-69C4-4D7C-BC0C-CC985620B235}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSAA.Utilities", "DSAA.Utilities\DSAA.Utilities.csproj", "{D955F364-0DC2-4FB4-82B1-7082208764C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSAA.Utilities", "DSAA.Utilities\DSAA.Utilities.csproj", "{D955F364-0DC2-4FB4-82B1-7082208764C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSAA.EntityFrameworkCore", "DSAA.EntityFrameworkCore\DSAA.EntityFrameworkCore.csproj", "{1335A3F6-B307-4BFB-9055-13D5616897A8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSAA.Repository", "DSAA.Repository\DSAA.Repository.csproj", "{D6D24468-A813-48C5-8295-BE50D0AC2B63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +23,6 @@ Global
 		{B5AA471D-AF8F-4F1F-8B11-0CA8172A3C39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5AA471D-AF8F-4F1F-8B11-0CA8172A3C39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5AA471D-AF8F-4F1F-8B11-0CA8172A3C39}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78C54149-CCCC-409A-87AA-22F4726D6477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78C54149-CCCC-409A-87AA-22F4726D6477}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78C54149-CCCC-409A-87AA-22F4726D6477}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78C54149-CCCC-409A-87AA-22F4726D6477}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5FBE3807-69C4-4D7C-BC0C-CC985620B235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5FBE3807-69C4-4D7C-BC0C-CC985620B235}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FBE3807-69C4-4D7C-BC0C-CC985620B235}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +31,14 @@ Global
 		{D955F364-0DC2-4FB4-82B1-7082208764C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D955F364-0DC2-4FB4-82B1-7082208764C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D955F364-0DC2-4FB4-82B1-7082208764C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1335A3F6-B307-4BFB-9055-13D5616897A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1335A3F6-B307-4BFB-9055-13D5616897A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1335A3F6-B307-4BFB-9055-13D5616897A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1335A3F6-B307-4BFB-9055-13D5616897A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6D24468-A813-48C5-8295-BE50D0AC2B63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6D24468-A813-48C5-8295-BE50D0AC2B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6D24468-A813-48C5-8295-BE50D0AC2B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6D24468-A813-48C5-8295-BE50D0AC2B63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

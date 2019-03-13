@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace DSAA.Repository
+namespace DSAA.EntityFrameworkCore.Entity
 {
     /// <summary>
     /// 提交结果
@@ -30,11 +30,12 @@ namespace DSAA.Repository
     /// 提交实体类
     /// </summary>
     [Serializable]
-    public class Solution
+    public class Solution : Entity
     {
         /// <summary>
         /// 提交ID
         /// </summary>
+        [Key]
         public Int32 ID { get; set; }
 
         /// <summary>

@@ -1,27 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DSAA.Repository
+namespace DSAA.EntityFrameworkCore.Entity
 {
     /// <summary>
     /// 用户实体类
     /// </summary>
-    [Serializable]
-    public class User
+    public class User : Entity
     {
         /// <summary>
         /// 用户标识
         /// </summary>
-        public Int32 Id { get; set; }
+        [Key]
+        public int Id { get; set; }
 
         /// <summary>
         /// 用户名
         /// </summary>
         [Required]
-        [MaxLength(50, ErrorMessage = "名字最长允许50个字。")]
+        [MaxLength(20, ErrorMessage = "名字最长允许20个字。")]
         [DisplayName("用户名")]
         public String UserName { get; set; }
 
@@ -30,6 +29,7 @@ namespace DSAA.Repository
         /// </summary>
         [Required]
         [DisplayName("密码")]
+        [MaxLength(20)]
         public String PassWord { get; set; }
 
         /// <summary>
@@ -37,6 +37,7 @@ namespace DSAA.Repository
         /// </summary>
         [Required]
         [DisplayName("昵称")]
+        [MaxLength(20, ErrorMessage = "昵称最长允许20个字。")]
         public String NickName { get; set; }
 
         /// <summary>

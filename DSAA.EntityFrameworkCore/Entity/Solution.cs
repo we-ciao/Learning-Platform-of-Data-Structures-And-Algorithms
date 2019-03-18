@@ -36,19 +36,19 @@ namespace DSAA.EntityFrameworkCore.Entity
         /// 提交ID
         /// </summary>
         [Key]
-        public Int32 ID { get; set; }
+        public Int32 Id { get; set; }
 
         /// <summary>
         /// 题目ID
         /// </summary>
         [Required]
-        public Int32 ProblemID { get; set; }
+        public virtual Problem Problem { get; set; }
 
         /// <summary>
         /// 用户ID
         /// </summary>
         [Required]
-        public Int32 UserID { get; set; }
+        public virtual User User { get; set; }
 
         /// <summary>
         /// 源代码
@@ -76,7 +76,7 @@ namespace DSAA.EntityFrameworkCore.Entity
         /// <summary>
         /// 竞赛ID
         /// </summary>
-        public Int32 ContestID { get; set; }
+        public virtual Contest Contest { get; set; }
 
         /// <summary>
         /// 竞赛题目ID

@@ -1,10 +1,14 @@
 ﻿using DSAA.EntityFrameworkCore;
 using DSAA.Repository;
 using DSAA.Repository.IRepository;
+using Learning_Platform_of_DSAA.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,32 +29,61 @@ namespace Learning_Platform_of_DSAA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //添加数据库上下文
-            var connection = Configuration.GetConnectionString("SqlServer");
-            services.AddDbContext<EntityDbContext>(options =>
-                options.UseSqlServer(connection, b => b.MigrationsAssembly("Learning_Platform_of_DSAA")));
-            services.AddMvc();
-            //添加IP查询
-            services.AddHttpContextAccessor();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;//关闭GDPR规范
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            //添加数据库上下文
+            var connection = Configuration.GetConnectionString("SqlServer");
+            services.AddDbContext<EntityDbContext>(options =>
+                options.UseLazyLoadingProxies().UseSqlServer(connection, b => b.MigrationsAssembly("Learning_Platform_of_DSAA")));
+            services.AddMvc();
+            //添加IP查询
+            services.AddHttpContextAccessor();
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 
             //手动注入
             services.AddScoped<IUserRepository, UserRepository>();
-            //services.AddScoped<IUserAppService, UserAppService>();
             //反射加载接口实现类，集中注册服务
-            //AddScopedByClassName(services, "DSAA.Repository");
             AddScopedByClassName(services, "DSAA.Service");
 
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                                 .RequireAuthenticatedUser()
+                                 .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            //Policy-based authorization
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Administrator", policy =>
+                    policy.Requirements.Add(new RoleRequirement("Administrator")));
+                options.AddPolicy("Teacher", policy =>
+                    policy.Requirements.Add(new RoleRequirement("Teacher")));
+                options.AddPolicy("Student", policy =>
+                    policy.Requirements.Add(new RoleRequirement("Student")));
+            });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie(options =>
+            {
+                options.AccessDeniedPath = new PathString("/Login");
+                options.LoginPath = new PathString("/Login");
+                options.LogoutPath = new PathString("/Logout");
+            });
+
+            services.AddSingleton<IAuthorizationHandler, RoleHandler>();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,17 +102,28 @@ namespace Learning_Platform_of_DSAA
 
             //使用静态文件
             app.UseStaticFiles();
+            app.UseAuthentication();
+            //Session
+            app.UseSession();
 
             app.UseCookiePolicy();
 
             //使用Mvc，设置默认路由为系统登录
             app.UseMvc(routes =>
             {
+
+                routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     //template: "{controller=Home}/{action=Index}/{id?}");
                     template: "{controller=Login}/{action=Index}/{id?}");
             });
+
+
+
         }
 
         /// <summary>  

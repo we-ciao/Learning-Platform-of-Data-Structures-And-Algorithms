@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
   </ItemGroup>
 
@@ -18,6 +19,20 @@
     <ProjectReference Include="..\DSAA.EntityFrameworkCore\DSAA.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\DSAA.Service\DSAA.Service.csproj" />
     <ProjectReference Include="..\DSAA.Utilities\DSAA.Utilities.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Areas\Administrator\Controllers\" />
+    <Folder Include="Areas\Administrator\Data\" />
+    <Folder Include="Areas\Administrator\Models\" />
+    <Folder Include="Areas\Administrator\Views\" />
+    <Folder Include="Areas\Student\Data\" />
+    <Folder Include="Areas\Student\Models\" />
+    <Folder Include="Areas\Student\Views\" />
+    <Folder Include="Areas\Teacher\Data\" />
+    <Folder Include="Areas\Teacher\Models\" />
+    <Folder Include="Areas\Teacher\Views\" />
   </ItemGroup>
 
 

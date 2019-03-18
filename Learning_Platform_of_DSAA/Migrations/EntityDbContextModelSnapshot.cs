@@ -15,11 +15,11 @@ namespace Learning_Platform_of_DSAA.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DSAA.EntityFrameworkCore.Compiler", b =>
+            modelBuilder.Entity("DSAA.EntityFrameworkCore.Entity.Compiler", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -50,9 +50,9 @@ namespace Learning_Platform_of_DSAA.Migrations
                     b.ToTable("Compilers");
                 });
 
-            modelBuilder.Entity("DSAA.EntityFrameworkCore.Contest", b =>
+            modelBuilder.Entity("DSAA.EntityFrameworkCore.Entity.Contest", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -76,12 +76,12 @@ namespace Learning_Platform_of_DSAA.Migrations
 
                     b.Property<string>("Title");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Contest");
                 });
 
-            modelBuilder.Entity("DSAA.EntityFrameworkCore.Group", b =>
+            modelBuilder.Entity("DSAA.EntityFrameworkCore.Entity.Group", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -91,16 +91,16 @@ namespace Learning_Platform_of_DSAA.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<bool>("isAdmin");
+                    b.Property<int>("Permission");
 
                     b.HasKey("Id");
 
                     b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("DSAA.EntityFrameworkCore.Problem", b =>
+            modelBuilder.Entity("DSAA.EntityFrameworkCore.Entity.Problem", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -133,20 +133,20 @@ namespace Learning_Platform_of_DSAA.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Problem");
                 });
 
-            modelBuilder.Entity("DSAA.EntityFrameworkCore.Solution", b =>
+            modelBuilder.Entity("DSAA.EntityFrameworkCore.Entity.Solution", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CodeLength");
 
-                    b.Property<int>("ContestID");
+                    b.Property<int?>("ContestId");
 
                     b.Property<int>("ContestProblemID");
 
@@ -156,7 +156,7 @@ namespace Learning_Platform_of_DSAA.Migrations
 
                     b.Property<int>("MemoryCost");
 
-                    b.Property<int>("ProblemID");
+                    b.Property<int>("ProblemId");
 
                     b.Property<byte>("Result");
 
@@ -170,16 +170,22 @@ namespace Learning_Platform_of_DSAA.Migrations
 
                     b.Property<int>("TimeCost");
 
-                    b.Property<int>("UserID");
+                    b.Property<int>("UserId");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContestId");
 
                     b.HasIndex("LanguageTypeId");
+
+                    b.HasIndex("ProblemId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Solution");
                 });
 
-            modelBuilder.Entity("DSAA.EntityFrameworkCore.User", b =>
+            modelBuilder.Entity("DSAA.EntityFrameworkCore.Entity.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -187,30 +193,23 @@ namespace Learning_Platform_of_DSAA.Migrations
 
                     b.Property<DateTime>("CreateDate");
 
-                    b.Property<string>("CreateIP");
-
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<int?>("GroupsId");
+                    b.Property<int?>("GroupId");
 
                     b.Property<bool>("IsLocked");
 
                     b.Property<DateTime>("LastDate");
 
-                    b.Property<string>("LastIP");
-
-                    b.Property<DateTime?>("LastOnline");
-
                     b.Property<string>("NickName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(20);
 
                     b.Property<string>("PassWord")
                         .IsRequired();
 
-                    b.Property<string>("Phone")
-                        .IsRequired();
+                    b.Property<string>("Phone");
 
                     b.Property<double>("Rank");
 
@@ -220,27 +219,41 @@ namespace Learning_Platform_of_DSAA.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(50);
+                        .HasMaxLength(20);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupsId");
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Uesrs");
                 });
 
-            modelBuilder.Entity("DSAA.EntityFrameworkCore.Solution", b =>
+            modelBuilder.Entity("DSAA.EntityFrameworkCore.Entity.Solution", b =>
                 {
-                    b.HasOne("DSAA.EntityFrameworkCore.Compiler", "LanguageType")
+                    b.HasOne("DSAA.EntityFrameworkCore.Entity.Contest", "Contest")
+                        .WithMany()
+                        .HasForeignKey("ContestId");
+
+                    b.HasOne("DSAA.EntityFrameworkCore.Entity.Compiler", "LanguageType")
                         .WithMany()
                         .HasForeignKey("LanguageTypeId");
+
+                    b.HasOne("DSAA.EntityFrameworkCore.Entity.Problem", "Problem")
+                        .WithMany()
+                        .HasForeignKey("ProblemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DSAA.EntityFrameworkCore.Entity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("DSAA.EntityFrameworkCore.User", b =>
+            modelBuilder.Entity("DSAA.EntityFrameworkCore.Entity.User", b =>
                 {
-                    b.HasOne("DSAA.EntityFrameworkCore.Group", "Groups")
+                    b.HasOne("DSAA.EntityFrameworkCore.Entity.Group", "Group")
                         .WithMany("Users")
-                        .HasForeignKey("GroupsId");
+                        .HasForeignKey("GroupId");
                 });
 #pragma warning restore 612, 618
         }

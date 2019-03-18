@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DSAA.EntityFrameworkCore.Entity
 {
@@ -37,7 +36,7 @@ namespace DSAA.EntityFrameworkCore.Entity
         /// 竞赛ID
         /// </summary>
         [Key]
-        public Int32 ID { get; set; }
+        public Int32 Id { get; set; }
 
         /// <summary>
         /// 竞赛标题
@@ -92,6 +91,7 @@ namespace DSAA.EntityFrameworkCore.Entity
         /// <summary>
         /// 获取竞赛类型名称
         /// </summary>
+        [NotMapped]
         public String ContestTypeString
         {
             get
@@ -115,6 +115,7 @@ namespace DSAA.EntityFrameworkCore.Entity
         /// <summary>
         /// 获取竞赛状态
         /// </summary>
+        [NotMapped]
         public ContestStatus ContestStatus
         {
             get

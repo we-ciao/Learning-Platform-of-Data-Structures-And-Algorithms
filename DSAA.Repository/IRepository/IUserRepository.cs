@@ -1,7 +1,5 @@
 ﻿using DSAA.EntityFrameworkCore.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace DSAA.Repository.IRepository
 {
@@ -16,6 +14,18 @@ namespace DSAA.Repository.IRepository
         /// <param name="userName">用户名</param>
         /// <param name="password">密码</param>
         /// <returns>存在返回用户实体，否则返回NULL</returns>
-        User CheckUser(string userName, string password);
+        Task<User> CheckUser(string userName, string password);
+
+        /// <summary>
+        /// 检查用户是存在
+        /// </summary>
+        /// <param name="userName">用户名</param>
+        bool CheckUser(string userName);
+
+        /// <summary>
+        /// 用户注册
+        /// </summary>
+        bool SignUp(User userModel);
+
     }
 }

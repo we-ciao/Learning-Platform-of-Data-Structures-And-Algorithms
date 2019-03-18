@@ -16,7 +16,7 @@ namespace DSAA.EntityFrameworkCore.Entity
         /// 题目ID
         /// </summary>
         [Key]
-        public Int32 ID { get; set; }
+        public Int32 Id { get; set; }
 
         /// <summary>
         /// 题目标题

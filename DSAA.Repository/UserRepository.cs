@@ -1,7 +1,9 @@
 ﻿using DSAA.EntityFrameworkCore;
 using DSAA.EntityFrameworkCore.Entity;
 using DSAA.Repository.IRepository;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DSAA.Repository
 {
@@ -20,9 +22,29 @@ namespace DSAA.Repository
         /// <param name="userName">用户名</param>
         /// <param name="password">密码</param>
         /// <returns>存在返回用户实体，否则返回NULL</returns>
-        public User CheckUser(string userName, string password)
+        public async Task<User> CheckUser(string userName, string password)
         {
-            return _dbContext.Set<User>().FirstOrDefault(it => it.UserName == userName && it.PassWord == password);
+            return await _dbContext.Uesrs.Where(it => it.UserName == userName && it.PassWord == password).FirstOrDefaultAsync();
         }
+
+        public bool CheckUser(string userName)
+        {
+            return _dbContext.Uesrs.Count(it => it.UserName == userName) > 0;
+        }
+
+        public bool SignUp(User userModel)
+        {
+            try
+            {
+                this.Insert(userModel);
+                Save();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
     }
 }

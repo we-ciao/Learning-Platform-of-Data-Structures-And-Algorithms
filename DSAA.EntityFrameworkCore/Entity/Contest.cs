@@ -32,11 +32,6 @@ namespace DSAA.EntityFrameworkCore.Entity
     [Serializable]
     public class Contest : Entity
     {
-        /// <summary>
-        /// 竞赛ID
-        /// </summary>
-        [Key]
-        public Int32 Id { get; set; }
 
         /// <summary>
         /// 竞赛标题

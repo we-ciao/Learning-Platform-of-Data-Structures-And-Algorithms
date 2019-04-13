@@ -11,8 +11,6 @@ namespace DSAA.EntityFrameworkCore.Entity
     [Serializable]
     public class Group : Entity
     {
-        [Key]
-        public Int32 Id { get; set; }
 
         /// <summary>
         /// 组名

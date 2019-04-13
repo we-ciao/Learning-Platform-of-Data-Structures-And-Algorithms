@@ -1,6 +1,4 @@
 ﻿using DSAA.EntityFrameworkCore;
-using DSAA.Repository;
-using DSAA.Repository.IRepository;
 using Learning_Platform_of_DSAA.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Learning_Platform_of_DSAA
 {
@@ -46,9 +46,17 @@ namespace Learning_Platform_of_DSAA
 
 
             //手动注入
-            services.AddScoped<IUserRepository, UserRepository>();
+            //services.AddScoped<IUserRepository, UserRepository>();
+            //services.AddScoped<IProblemRepository, ProblemRepository>();
             //反射加载接口实现类，集中注册服务
-            AddScopedByClassName(services, "DSAA.Service");
+            AddScopedByClassName(services, "DSAA.Repository", x =>
+                 x.Name != "IRepository" &&
+                 x.Name != "FonourRepositoryBase"
+                );
+            AddScopedByClassName(services, "DSAA.Service", x =>
+                 1 == 1
+
+            );
 
             services.AddMvc(config =>
             {
@@ -130,12 +138,18 @@ namespace Learning_Platform_of_DSAA
         /// 获取程序集中的实现类对应的多个接口
         /// </summary>  
         /// <param name="assemblyName">程序集</param>
-        public void AddScopedByClassName(IServiceCollection services, string assemblyName)
+        public void AddScopedByClassName(IServiceCollection services, string assemblyName, Func<Type, bool> unclude)
         {
             Assembly assembly = Assembly.Load(assemblyName);
-            foreach (var implement in assembly.GetTypes())
+            foreach (var implement in assembly.GetTypes().Where(x => x.IsGenericType == false))
             {
-                Type[] interfaceType = implement.GetInterfaces();
+                if (implement.IsDefined(typeof(CompilerGeneratedAttribute), false))
+                    continue;
+
+                Type[] interfaceType1 = implement.GetInterfaces();
+                var sss = implement.GetInterfaces().Where(x => x.IsGenericType == false).ToArray();
+                Type[] interfaceType = implement.GetInterfaces().Where(x => x.IsGenericType == false).Where(unclude).ToArray() as Type[];
+
                 foreach (var service in interfaceType)
                 {
                     services.AddTransient(service, implement);

@@ -13,11 +13,6 @@ namespace DSAA.EntityFrameworkCore.Entity
     [Serializable]
     public class Compiler : Entity
     {
-        /// <summary>
-        /// 编译器ID
-        /// </summary>
-        [Key]
-        public Int32 Id { get; set; }
 
         /// <summary>
         /// 编译器名称

@@ -11,12 +11,6 @@ namespace DSAA.EntityFrameworkCore.Entity
     public class User : Entity
     {
         /// <summary>
-        /// 用户标识
-        /// </summary>
-        [Key]
-        public int Id { get; set; }
-
-        /// <summary>
         /// 用户名
         /// </summary>
         [DisplayName("用户名")]

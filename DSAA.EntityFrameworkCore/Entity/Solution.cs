@@ -33,12 +33,6 @@ namespace DSAA.EntityFrameworkCore.Entity
     public class Solution : Entity
     {
         /// <summary>
-        /// 提交ID
-        /// </summary>
-        [Key]
-        public Int32 Id { get; set; }
-
-        /// <summary>
         /// 题目ID
         /// </summary>
         [Required]

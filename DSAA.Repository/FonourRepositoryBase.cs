@@ -78,6 +78,30 @@ namespace DSAA.Repository
             return entity;
         }
 
+
+        /// <summary>
+        /// 增加一列数据
+        /// </summary>
+        /// <param name="entities">对象实体列表</param>
+        /// <returns>实体ID,不成功则返回-1</returns>
+        public int InsertList(List<TEntity> entities)
+        {
+            List<Int32> resultIDs = new List<Int32>();
+
+            if (entities == null || entities.Count < 1)
+            {
+                return 0;
+            }
+
+            for (Int32 i = 0; i < entities.Count; i++)
+            {
+                _dbContext.Set<TEntity>().Add(entities[i]);
+
+            }
+
+            return _dbContext.SaveChanges();
+        }
+
         /// <summary>
         /// 更新实体
         /// </summary>
@@ -147,7 +171,7 @@ namespace DSAA.Repository
     /// 主键为Guid类型的仓储基类
     /// </summary>
     /// <typeparam name="TEntity">实体类型</typeparam>
-    public abstract class FonourRepositoryBase<TEntity> : FonourRepositoryBase<TEntity, Guid> where TEntity : Entity
+    public abstract class FonourRepositoryBase<TEntity> : FonourRepositoryBase<TEntity, Int32> where TEntity : Entity
     {
         public FonourRepositoryBase(EntityDbContext dbContext) : base(dbContext)
         {

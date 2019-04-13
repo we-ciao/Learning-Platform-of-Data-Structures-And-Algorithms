@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewData["Title"] = "题目信息导入";
+}
+
+<div class="">
+    <div class="page-header-title">
+        <h4 class="page-title">@ViewData["Title"] </h4>
+    </div>
+</div>
+
+<div class="page-content-wrapper ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-body">
+                                        <address>
+                                            1. 您可以在本页导入Free Problem Set V1.2及以下版本的题目信息和数据，您可以上传xml文件。<br />
+                                            2. 当FPS文件中包含题目数据时，会自动创建题目数据，题目上传后默认为隐藏状态。<br />
+                                            3. Free Problem Set题目格式请参考：<a href="http://code.google.com/p/freeproblemset/wiki/TransportFileDefinition" target="_blank">http://code.google.com/p/freeproblemset/wiki/TransportFileDefinition</a>
+                                        </address>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+
+                                <div class="panel-body">
+
+
+                                    <form asp-controller="Problem" asp-action="Import" cmethod="post" class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"><span class="star">*</span>文件格式</label>
+                                            <div class="col-md-10">
+                                                <select name="filetype" class="form-control">
+                                                    <!--<option value="0">XOL(eXtendible Onlinejudge Language)</option>-->
+                                                    <option value="1">FPS(Free Problem Set) V1.2</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"><span class="star">*</span>文件路径</label>
+                                            <div class="col-md-10">
+
+                                                <input name="file" type="file" class="uploadbox" onpaste="return false;" onkeydown="return false;" data-emptyinfo="您没有选择要上传的文件，请重新选择！" data-regex="\.xml$" data-invalidinfo="您选择的文件类型有误，请重新选择！" />
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label class="col-md-10 control-label"></label>
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                Submit
+                                            </button>
+                                            <button type="reset" class="btn btn-default waves-effect m-l-5">
+                                                Cancel
+                                            </button>
+                                        </div>
+
+                                    </form>
+                                </div> <!-- panel-body -->
+                            </div>
+                        </div> <!-- end row -->
+                    </div> <!-- panel body -->
+                </div> <!-- end panel -->
+
+            </div> <!-- end col -->
+
+        </div>
+        <!-- end row -->
+
+
+    </div><!-- container -->
+</div> <!-- Page content Wrapper -->

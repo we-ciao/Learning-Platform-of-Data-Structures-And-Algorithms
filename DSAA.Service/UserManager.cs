@@ -79,10 +79,10 @@ namespace DSAA.Service
                 var _isession = _httpContextAccessor.HttpContext.Session;
                 ////记录Session
                 //_isession.Set("CurrentUser", ByteConvertHelper.Object2Bytes(user));
-                _isession.Set("UserId", ByteConvertHelper.Object2Bytes(user.Id));
-                _isession.Set("UserName", ByteConvertHelper.Object2Bytes(user.UserName));
-                _isession.Set("UserNickName", ByteConvertHelper.Object2Bytes(user.NickName));
-                _isession.Set("UserRole", ByteConvertHelper.Object2Bytes(role));
+                _isession.Set("UserId", System.Text.Encoding.UTF8.GetBytes(user.Id.ToString()));
+                _isession.Set("UserName", System.Text.Encoding.UTF8.GetBytes(user.UserName));
+                _isession.Set("UserNickName", System.Text.Encoding.UTF8.GetBytes(user.NickName));
+                _isession.Set("UserRole", System.Text.Encoding.UTF8.GetBytes(role));
 
             }
         }

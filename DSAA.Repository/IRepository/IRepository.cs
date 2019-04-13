@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace DSAA.Repository.IRepository
 {
@@ -55,6 +54,13 @@ namespace DSAA.Repository.IRepository
         TEntity Insert(TEntity entity);
 
         /// <summary>
+        /// 增加一列数据
+        /// </summary>
+        /// <param name="entities">对象实体列表</param>
+        /// <returns>实体ID,不成功则返回-1</returns>
+        Int32 InsertList(List<TEntity> entities);
+
+        /// <summary>
         /// 更新实体
         /// </summary>
         /// <param name="entity">实体</param>
@@ -77,13 +83,18 @@ namespace DSAA.Repository.IRepository
         /// </summary>
         /// <param name="id">实体主键</param>
         void Delete(TPrimaryKey id);
+
+        /// <summary>
+        /// 事务性保存
+        /// </summary>
+        void Save();
     }
 
     /// <summary>
     /// 默认Guid主键类型仓储
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public interface IRepository<TEntity> : IRepository<TEntity, Guid> where TEntity : Entity
+    public interface IRepository<TEntity> : IRepository<TEntity, Int32> where TEntity : Entity
     {
 
     }

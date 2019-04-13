@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace DSAA.EntityFrameworkCore.Entity
 {
@@ -13,13 +12,14 @@ namespace DSAA.EntityFrameworkCore.Entity
         /// <summary>
         /// 主键
         /// </summary>
-        public virtual TPrimaryKey Id { get; set; }
+        [Key]
+        public TPrimaryKey Id { get; set; }
     }
 
     /// <summary>
     /// 定义默认主键类型为Guid的实体基类
     /// </summary>
-    public abstract class Entity : Entity<Guid>
+    public abstract class Entity : Entity<Int32>
     {
 
     }

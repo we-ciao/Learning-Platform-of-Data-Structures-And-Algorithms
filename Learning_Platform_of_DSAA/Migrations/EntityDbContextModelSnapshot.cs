@@ -109,7 +109,8 @@ namespace Learning_Platform_of_DSAA.Migrations
 
                     b.Property<string>("Hint");
 
-                    b.Property<string>("Input");
+                    b.Property<string>("Input")
+                        .IsRequired();
 
                     b.Property<bool>("IsHide");
 
@@ -117,11 +118,14 @@ namespace Learning_Platform_of_DSAA.Migrations
 
                     b.Property<int>("MemoryLimit");
 
-                    b.Property<string>("Output");
+                    b.Property<string>("Output")
+                        .IsRequired();
 
-                    b.Property<string>("SampleInput");
+                    b.Property<string>("SampleInput")
+                        .IsRequired();
 
-                    b.Property<string>("SampleOutput");
+                    b.Property<string>("SampleOutput")
+                        .IsRequired();
 
                     b.Property<int>("SolvedCount");
 

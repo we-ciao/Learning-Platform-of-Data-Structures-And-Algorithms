@@ -1,0 +1,117 @@
+﻿@model Problem
+
+@{
+    ViewData["Title"] = "题目信息编辑";
+}
+
+<div class="">
+    <div class="page-header-title">
+        <h4 class="page-title">@ViewData["Title"] </h4>
+    </div>
+</div>
+
+<div class="page-content-wrapper ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-body">
+                                        <address>
+                                            1. 您可以在本页添加或修改题目信息，本页标记<span class="star">*</span>的为必填项。<br />
+                                            2. 基础时间限制默认为 1000ms，基础内存限制默认为 32768KB，各语言根据配置文件加乘。<br />
+                                            3. 题目添加后默认为隐藏状态，如需显示请在管理界面进行相应操作。<br />
+                                            4. 题目新建后请访问题目管理页面创建或上传题目数据。
+                                        </address>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+
+                                <div class="panel-body">
+
+
+                                    <form asp-controller="Problem" asp-action="Add" cmethod="post" class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"><span class="star">*</span>题目标题</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" asp-for="Title" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"><span class="star">*</span>时间限制(MS)</label>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" asp-for="TimeLimit" data-parsley-min="1" required>
+                                            </div>
+                                            <label class="col-md-2 control-label"><span class="star">*</span>内存限制(KB)</label>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" asp-for="MemoryLimit" data-parsley-min="1" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"><span class="star">*</span>题目描述<br /><span class="supplementary">支持HTML代码</span></label>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control" rows="5" asp-for="Description" required></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"><span class="star">*</span>题目输入<br /><span class="supplementary">支持HTML代码</span></label>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control" rows="5" asp-for="Input" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"><span class="star">*</span>题目输出<br /><span class="supplementary">支持HTML代码</span></label>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control" rows="5" asp-for="Output" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"><span class="star">*</span>样例输入<br /><span class="supplementary">不支持HTML代码</span></label>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control" rows="5" asp-for="SampleInput" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"><span class="star">*</span>样例输出<br /><span class="supplementary">不支持HTML代码</span></label>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control" rows="5" asp-for="SampleOutput" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">提示信息<br /><span class="supplementary">支持HTML代码</span></label>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control" rows="5" asp-for="Hint"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-10 control-label"></label>
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                Submit
+                                            </button>
+                                            <button type="reset" class="btn btn-default waves-effect m-l-5">
+                                                Cancel
+                                            </button>
+                                        </div>
+
+                                    </form>
+                                </div> <!-- panel-body -->
+                            </div>
+                        </div> <!-- end row -->
+                    </div> <!-- panel body -->
+                </div> <!-- end panel -->
+
+            </div> <!-- end col -->
+
+        </div>
+        <!-- end row -->
+
+
+    </div><!-- container -->
+</div> <!-- Page content Wrapper -->
+

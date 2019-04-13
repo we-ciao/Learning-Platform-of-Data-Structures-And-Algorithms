@@ -32,7 +32,7 @@ namespace Learning_Platform_of_DSAA.Controllers
         public IActionResult Index(string returnUrl = null)
         {
             //移除当前登录人信息
-            //_service.RemoveCurrentUser(_httpContextAccessor);
+            Logout();
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }

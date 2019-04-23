@@ -1,0 +1,91 @@
+﻿@model DSAA.EntityFrameworkCore.Entity.User
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PassWord" class="control-label"></label>
+                <input asp-for="PassWord" class="form-control" />
+                <span asp-validation-for="PassWord" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NickName" class="control-label"></label>
+                <input asp-for="NickName" class="form-control" />
+                <span asp-validation-for="NickName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubmitCount" class="control-label"></label>
+                <input asp-for="SubmitCount" class="form-control" />
+                <span asp-validation-for="SubmitCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SolvedCount" class="control-label"></label>
+                <input asp-for="SolvedCount" class="form-control" />
+                <span asp-validation-for="SolvedCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsLocked" /> @Html.DisplayNameFor(model => model.IsLocked)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreateDate" class="control-label"></label>
+                <input asp-for="CreateDate" class="form-control" />
+                <span asp-validation-for="CreateDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastDate" class="control-label"></label>
+                <input asp-for="LastDate" class="form-control" />
+                <span asp-validation-for="LastDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rank" class="control-label"></label>
+                <input asp-for="Rank" class="form-control" />
+                <span asp-validation-for="Rank" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+</body>
+</html>

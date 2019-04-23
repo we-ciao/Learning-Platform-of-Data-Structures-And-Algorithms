@@ -46,7 +46,7 @@ else if (ViewBag.UserRole == "Teacher")
         <ul class="list-unstyled">
             <li><a asp-area="Teacher" asp-controller="Problem" asp-action="Add">题目信息添加</a></li>
             <li><a asp-area="Teacher" asp-controller="Problem" asp-action="Import">题目信息导入</a></li>
-            <li><a href="ui-components.html">题目综合管理</a></li>
+            <li><a asp-area="Teacher" asp-controller="Problem" asp-action="List">题目综合管理</a></li>
             <li><a href="ui-buttons.html">题目分类管理</a></li>
         </ul>
     </li>

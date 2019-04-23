@@ -10,7 +10,7 @@ namespace DSAA.Repository
     /// <summary>
     /// 题目管理仓储实现
     /// </summary>
-    public class ProblemRepository : FonourRepositoryBase<Problem>, IProblemRepository
+    public class ProblemRepository : RepositoryBase<Problem>, IProblemRepository
     {
         public ProblemRepository(EntityDbContext dbcontext) : base(dbcontext)
         {

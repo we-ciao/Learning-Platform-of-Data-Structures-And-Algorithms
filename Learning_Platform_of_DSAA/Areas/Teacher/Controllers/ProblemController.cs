@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
 {
@@ -32,23 +32,24 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
         /// </summary>
         /// <param name="id">页面索引</param>
         /// <returns>操作后的结果</returns>
-        public async Task<IActionResult> List(Int32 id = 1)
+        public IActionResult List(Int32 id = 1)
         {
-            //await _context.Problem.ToListAsync()
-            return View( );
+            return View(_problemAppService.GetAllList());
         }
 
 
         /// <summary>
         /// 题目添加
         /// </summary>
-        public IActionResult Add()
+        public IActionResult Add(int? id)
         {
             Problem entity = new Problem()
             {
                 TimeLimit = 1000,
                 MemoryLimit = 32768
             };
+            if (id != null)
+                entity = _problemAppService.Find((int)id);
             return View(entity);
         }
 
@@ -59,15 +60,15 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
 
             if (ModelState.IsValid)
             {
-                bool result = _problemAppService.InsertOrUpdateProblem(model);
+                string result = _problemAppService.InsertOrUpdateProblem(model);
 
-                if (!result)
+                if (result == null)
                 {
-                    ViewBag.SweetInfo = "添加失败";
+                    ViewBag.SweetInfo = "操作失败";
                     return View();
                 }
 
-                ViewBag.SweetInfo = "添加成功！";
+                ViewBag.SweetInfo = result + "成功！";
                 return View(model);
             }
 
@@ -99,23 +100,29 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
         /// <param name="file">上传的文件</param>
         /// <returns>操作后的结果</returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Import(List<IFormFile> files)
+        //[DisableRequestSizeLimit] //禁用http限制大小
+        [RequestSizeLimit(100 * 1024 * 1024)] //限制http大小
+        public ActionResult Import(IFormFile files)
         {
-            //todo
-            //if (String.Equals("1", uploadType))//从文件上传
-            //{
-            //    if (file == null)
-            //    {
-            //        return MethodResult.FailedAndLog("No file was uploaded!");
-            //    }
+            if (files == null)
+            {
+                ViewBag.SweetInfo = "文件未上传!";
+                return View();
+            }
+            var filePath = Path.GetTempFileName();
 
-            //    StreamReader sr = new StreamReader(file.InputStream);
 
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                files.CopyTo(stream);
+            }
+
+
+            StreamReader sr = new StreamReader(filePath);
             //    content = sr.ReadToEnd();
             //}
 
-            Dictionary<Int32, Boolean> result = _problemAppService.AdminImportProblem(files.ToString());
+            Dictionary<Int32, Boolean> result = _problemAppService.AdminImportProblem(sr.ReadToEnd());
 
             if (result == null || result.Count == 0)
             {
@@ -124,7 +131,7 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
             }
 
 
-            String successInfo = String.Format("{0} problem(s) have benn successfully imported!", result.Count.ToString());
+            String successInfo = String.Format("{0} 个题目已经被成功导入!", result.Count.ToString());
 
             StringBuilder nodataItems = new StringBuilder();
             Int32 nodataCount = 0;
@@ -145,7 +152,7 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
 
             if (nodataCount > 0)
             {
-                successInfo += String.Format("<br/>{0} problem(s) ({1}) have no data or fail to import these data!", nodataCount.ToString(), nodataItems.ToString());
+                successInfo += String.Format("<br/>{0} 个问题 ({1}) 没有数据或者导入失败!", nodataCount.ToString(), nodataItems.ToString());
             }
 
             ViewBag.SweetInfo = successInfo;
@@ -153,10 +160,101 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
 
         }
 
+        /// <summary>
+        /// 题目数据创建页面
+        /// </summary>
+        /// <param name="id">题目ID</param>
+        /// <returns>操作后的结果</returns>
+        public ActionResult DataCreate(String id)
+        {
+            ViewBag.ProblemID = id;
 
-        public IActionResult List()
+            return View();
+        }
+
+        /// <summary>
+        /// 题目数据创建
+        /// </summary>
+        /// <param name="id">题目ID</param>
+        /// <param name="form">Form集合</param>
+        /// <returns>操作后的结果</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DataCreate(Int32 id, FormCollection form)
         {
             return View();
+            //return _problemAppService.ProblemDataManager.AdminSaveProblemData, id, form, Request.Files, "Your have created problem data successfully!");
+        }
+
+        /// <summary>
+        /// 题目数据导入页面
+        /// </summary>
+        /// <param name="id">题目ID</param>
+        /// <returns>操作后的结果</returns>
+        public ActionResult DataUpload(String id)
+        {
+            ViewBag.ProblemID = id;
+
+            return View();
+        }
+
+        /// <summary>
+        /// 题目数据导入
+        /// </summary>
+        /// <param name="id">题目ID</param>
+        /// <param name="file">上传文件</param>
+        /// <returns>操作后的结果</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DataUpload(Int32 id, IFormFile files)
+        {
+            ViewBag.ProblemID = id;
+            ViewBag.SweetInfo = _problemAppService.AdminSaveProblemData(id, files);
+            return View();
+            //return ResultToMessagePage(ProblemDataManager.AdminSaveProblemData, id, file, "Your have uploaded problem data successfully!");
+        }
+
+
+        /// <summary>
+        /// 题目数据下载
+        /// </summary>
+        /// <param name="id">题目ID</param>
+        /// <returns>操作后的结果</returns>
+        [HttpGet]
+        public ActionResult DataDownload(Int32 id = -1)
+        {
+            try
+            {
+                var addrUrl = _problemAppService.AdminGetProblemDataDownloadPath(id);
+                FileStream fs = new FileStream(addrUrl, FileMode.Open);
+                return File(fs, "application/vnd.android.package-archive", id + ".zip");
+            }
+            catch
+            {
+                return File(new byte[1], "application/vnd.android.package-archive", id + "DataNotFound");
+            }
+        }
+
+        /// <summary>
+        /// 题目数据删除
+        /// </summary>
+        /// <param name="id">题目ID</param>
+        /// <returns>操作后的结果</returns>
+        [HttpPost]
+        public ActionResult DeleteData(int id)
+        {
+            return Json(_problemAppService.AdminDeleteProblemDataRealPath(id)); ;
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            _problemAppService.AdminDeleteProblemDataRealPath(id);
+
+            Problem entity = _problemAppService.Find(id);
+            _problemAppService.Delete(entity);
+
+            return Json(_problemAppService.Save()); ;
         }
 
         public IActionResult Categorylist()

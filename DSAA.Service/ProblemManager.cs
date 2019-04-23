@@ -3,6 +3,7 @@ using DSAA.Repository.IRepository;
 using DSAA.Service.IService;
 using DSAA.Utilities;
 using DSAA.Utilities.FreeProblem;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -14,26 +15,28 @@ namespace DSAA.Service
     /// <summary>
     /// 题目管理服务
     /// </summary>
-    public class ProblemManager : IProblemAppService
+    public class ProblemManager : ServiceBase<Problem>, IProblemAppService
     {
         //用户管理仓储接口
         private readonly IProblemRepository _problemReporitory;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IConfiguration _configuration;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        private string ProblemDataPath;
+        private readonly string ProblemDataPath;
 
         /// <summary>
         /// 构造函数 实现依赖注入
         /// </summary>
         /// <param name="userRepository">仓储对象</param>
-        public ProblemManager(IHttpContextAccessor httpContextAccessor, IProblemRepository problemReporitory, IConfiguration configuration)
+        public ProblemManager(IHttpContextAccessor httpContextAccessor, IProblemRepository problemReporitory, IConfiguration configuration, IHostingEnvironment hostingEnvironment) : base(problemReporitory)
         {
             _problemReporitory = problemReporitory;
             _httpContextAccessor = httpContextAccessor;
             _configuration = configuration;
+            _hostingEnvironment = hostingEnvironment;
 
-            ProblemDataPath = _configuration.GetSection("Upload")["ProblemDataPath"];
+            ProblemDataPath = _hostingEnvironment.WebRootPath + _configuration.GetSection("Upload")["ProblemDataPath"];
         }
 
         /// <summary>
@@ -41,21 +44,21 @@ namespace DSAA.Service
         /// </summary>
         /// <param name="entity">题目实体</param>
         /// <returns>是否成功增加</returns>
-        public bool InsertOrUpdateProblem(Problem entity)
+        public string InsertOrUpdateProblem(Problem entity)
         {
 
             entity.IsHide = true;
             entity.LastDate = DateTime.Now;
             try
             {
-                _problemReporitory.InsertOrUpdate(entity);
+                var re = _problemReporitory.InsertOrUpdate(entity);
                 _problemReporitory.Save();
-                return true;
+                return re;
             }
-            catch
+            catch (Exception ex)
             {
 
-                return false;
+                return null;
             }
         }
 
@@ -64,14 +67,14 @@ namespace DSAA.Service
         /// </summary>
         /// <param name="content">文件内容</param>
         /// <returns>题目数据是否插入成功集合（全部失败时为null）</returns>
-        public  Dictionary<Int32, Boolean> AdminImportProblem(String content)
+        public Dictionary<Int32, Boolean> AdminImportProblem(String content)
         {
 
 
             //转换题库模型
-            List<Problem> problems = null;
-            List<Byte[]> datas = null;
-            List<Dictionary<String, Byte[]>> images = null;
+            List<Problem> problems;
+            List<Byte[]> datas;
+            List<Dictionary<String, Byte[]>> images;
             Dictionary<String, Byte[]> imagefiles = new Dictionary<String, Byte[]>();
 
             if (!ProblemImport.TryImportFreeProblemSet(content, out problems, out datas, out images))
@@ -123,7 +126,8 @@ namespace DSAA.Service
             //List<Int32> pids = _problemReporitory.InsertList(problems);
 
             //插入成功的数据 在problems中应有id
-            if (_problemReporitory.InsertList(problems) > 0)
+            int change = _problemReporitory.InsertList(problems);
+            if (change == 0)
             {
                 //Failed to import problem!
                 return null;
@@ -154,7 +158,7 @@ namespace DSAA.Service
                         dataadded[problems[i].Id] = true;
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
                     dataadded[problems[i].Id] = false;
                 }
@@ -168,7 +172,7 @@ namespace DSAA.Service
             {
                 try
                 {
-                   // UploadsManager.InternalAdminSaveUploadFile(pair.Value, pair.Key);
+                    InternalAdminSaveUploadFile(pair.Value, pair.Key);
                 }
                 catch { }
             }
@@ -182,8 +186,67 @@ namespace DSAA.Service
 
 
 
+        #region 常量
+        private static readonly String[] ALLOW_EXTENSTIONS = new String[] { ".zip", ".rar", ".7z", ".bmp", ".jpg", ".png", ".gif", ".txt", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".pdf" };
+        #endregion
 
         #region 管理方法
+
+        /// <summary>
+        /// 检查文件扩展名是否有效
+        /// </summary>
+        /// <param name="ext">文件扩展名</param>
+        /// <param name="allowExts">允许的扩展名集合</param>
+        /// <returns>文件扩展名是否有效</returns>
+        private static Boolean CheckFileExtension(String ext, String[] allowExts)
+        {
+            if (allowExts == null || allowExts.Length == 0)
+            {
+                return true;
+            }
+
+            for (Int32 i = 0; i < allowExts.Length; i++)
+            {
+                if (allowExts[i].Equals(ext, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 保存单个文件到磁盘
+        /// </summary>
+        /// <param name="fileContent">文件内容</param>
+        /// <param name="fileNewName">文件新名称</param>
+        /// <returns>是否保存成功</returns>
+        internal bool InternalAdminSaveUploadFile(Byte[] fileContent, String fileNewName)
+        {
+            if (String.IsNullOrEmpty(fileNewName))
+            {
+                return false;
+            }
+
+            FileInfo fi = new FileInfo(fileNewName);
+
+            if (!CheckFileExtension(fi.Extension, ALLOW_EXTENSTIONS))
+            {
+                return false;
+            }
+
+            String savePath = Path.Combine(ProblemDataPath, fileNewName);
+
+            if (File.Exists(savePath))
+            {
+                return false;
+            }
+
+            File.WriteAllBytes(savePath, fileContent);
+
+            return true;
+        }
 
         /// <summary>
         /// 获取题目数据真实路径
@@ -195,6 +258,43 @@ namespace DSAA.Service
             string filePath = Path.Combine(ProblemDataPath, pid.ToString() + ".zip");
 
             return (File.Exists(filePath) ? filePath : null);
+        }
+
+        /// <summary>
+        /// 保存题目数据文件到磁盘
+        /// </summary>
+        /// <param name="problemID">题目ID</param>
+        /// <param name="file">上传文件</param>
+        /// <returns>是否保存成功</returns>
+        public String AdminSaveProblemData(Int32 problemID, IFormFile file)
+        {
+
+            if (file == null)
+            {
+                return "没有上传文件!";
+            }
+
+
+            FileInfo fi = new FileInfo(file.FileName);
+            if (!".zip".Equals(fi.Extension, StringComparison.OrdinalIgnoreCase))
+            {
+                return "文件格式不为.zip!";
+            }
+
+            //if (!String.Equals(problemID.ToString(), Path.GetFileNameWithoutExtension(fi.Name)))
+            //{
+            //    return "文件名应为题目ID!";
+            //}
+
+            String fileNewName = problemID.ToString() + ".zip";
+            String savePath = Path.Combine(ProblemDataPath, fileNewName);
+
+            using (var stream = new FileStream(savePath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+
+            return string.Format("Admin upload problem data, id = {0}", problemID.ToString());
         }
 
         /// <summary>
@@ -239,25 +339,28 @@ namespace DSAA.Service
         /// </summary>
         /// <param name="problemID">题目ID</param>
         /// <returns>是否删除成功</returns>
-        public bool AdminDeleteProblemDataRealPath(Int32 problemID)
+        public string AdminDeleteProblemDataRealPath(Int32 problemID)
         {
 
             if (problemID < 1)
             {
-                return false;
+                return "题目不存在";
             }
 
             String dataPath = GetProblemDataRealPath(problemID);
 
             if (String.IsNullOrEmpty(dataPath))
             {
-                return false;
+                return "数据不存在";
             }
 
             File.Delete(dataPath);
 
-            return true;
+            return null;
         }
+
+
+
         #endregion
 
     }

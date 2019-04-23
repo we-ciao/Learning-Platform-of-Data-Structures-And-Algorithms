@@ -1,31 +1,27 @@
-﻿using DSAA.EntityFrameworkCore;
-using DSAA.EntityFrameworkCore.Entity;
+﻿using DSAA.EntityFrameworkCore.Entity;
 using DSAA.Repository.IRepository;
-using Microsoft.EntityFrameworkCore;
+using DSAA.Service.IService;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 
-namespace DSAA.Repository
+namespace DSAA.Service
 {
     /// <summary>
-    /// 仓储基类
+    /// 服务基类
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TPrimaryKey">主键类型</typeparam>
-    public abstract class FonourRepositoryBase<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey> where TEntity : Entity<TPrimaryKey>
+    public abstract class ServiceBase<TEntity, TPrimaryKey> : IService<TEntity, TPrimaryKey> where TEntity : Entity<TPrimaryKey>
     {
         //定义数据访问上下文对象
-        protected readonly EntityDbContext _dbContext;
+        protected readonly IRepository<TEntity, TPrimaryKey> _repository;
 
         /// <summary>
         /// 通过构造函数注入得到数据上下文对象实例
         /// </summary>
         /// <param name="dbContext"></param>
-        public FonourRepositoryBase(EntityDbContext dbContext)
+        public ServiceBase(IRepository<TEntity, TPrimaryKey> repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         /// <summary>
@@ -34,7 +30,7 @@ namespace DSAA.Repository
         /// <returns></returns>
         public List<TEntity> GetAllList()
         {
-            return _dbContext.Set<TEntity>().ToList();
+            return _repository.GetAllList();
         }
 
         /// <summary>
@@ -44,7 +40,7 @@ namespace DSAA.Repository
         /// <returns></returns>
         public List<TEntity> GetAllList(Expression<Func<TEntity, bool>> predicate)
         {
-            return _dbContext.Set<TEntity>().Where(predicate).ToList();
+            return _repository.GetAllList(predicate);
         }
 
         /// <summary>
@@ -54,7 +50,17 @@ namespace DSAA.Repository
         /// <returns></returns>
         public TEntity Get(TPrimaryKey id)
         {
-            return _dbContext.Set<TEntity>().FirstOrDefault(CreateEqualityExpressionForId(id));
+            return _repository.Get(id);
+        }
+
+        /// <summary>
+        /// 根据主键查询实体
+        /// </summary>
+        /// <param name="id">实体主键</param>
+        /// <returns></returns>
+        public TEntity Find(TPrimaryKey id)
+        {
+            return _repository.Find(id);
         }
 
         /// <summary>
@@ -64,7 +70,7 @@ namespace DSAA.Repository
         /// <returns></returns>
         public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate)
         {
-            return _dbContext.Set<TEntity>().FirstOrDefault(predicate);
+            return _repository.FirstOrDefault(predicate);
         }
 
         /// <summary>
@@ -72,10 +78,9 @@ namespace DSAA.Repository
         /// </summary>
         /// <param name="entity">实体</param>
         /// <returns></returns>
-        public TEntity Insert(TEntity entity)
+        public void Insert(TEntity entity)
         {
-            _dbContext.Set<TEntity>().Add(entity);
-            return entity;
+            _repository.Insert(entity);
         }
 
 
@@ -86,42 +91,29 @@ namespace DSAA.Repository
         /// <returns>实体ID,不成功则返回-1</returns>
         public int InsertList(List<TEntity> entities)
         {
-            List<Int32> resultIDs = new List<Int32>();
-
-            if (entities == null || entities.Count < 1)
-            {
-                return 0;
-            }
-
-            for (Int32 i = 0; i < entities.Count; i++)
-            {
-                _dbContext.Set<TEntity>().Add(entities[i]);
-
-            }
-
-            return _dbContext.SaveChanges();
+            return _repository.InsertList(entities);
         }
 
         /// <summary>
         /// 更新实体
         /// </summary>
         /// <param name="entity">实体</param>
-        public TEntity Update(TEntity entity)
+        public void Update(TEntity entity)
         {
-            _dbContext.Set<TEntity>().Attach(entity);
-            _dbContext.Entry(entity).State = EntityState.Modified;
-            return entity;
+
+            _repository.Update(entity);
         }
 
         /// <summary>
         /// 新增或更新实体
         /// </summary>
         /// <param name="entity">实体</param>
-        public TEntity InsertOrUpdate(TEntity entity)
+        public void InsertOrUpdate(TEntity entity)
         {
             if (Get(entity.Id) != null)
-                return Update(entity);
-            return Insert(entity);
+                Update(entity);
+            else
+                Insert(entity);
         }
 
         /// <summary>
@@ -130,7 +122,7 @@ namespace DSAA.Repository
         /// <param name="entity">要删除的实体</param>
         public void Delete(TEntity entity)
         {
-            _dbContext.Set<TEntity>().Remove(entity);
+            _repository.Delete(entity);
         }
 
         /// <summary>
@@ -139,41 +131,26 @@ namespace DSAA.Repository
         /// <param name="id">实体主键</param>
         public void Delete(TPrimaryKey id)
         {
-            _dbContext.Set<TEntity>().Remove(Get(id));
+            _repository.Delete(id);
         }
 
         /// <summary>
         /// 事务性保存
         /// </summary>
-        public void Save()
+        public int Save()
         {
-            _dbContext.SaveChanges();
+            return _repository.Save();
         }
 
-        /// <summary>
-        /// 根据主键构建判断表达式
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns></returns>
-        protected static Expression<Func<TEntity, bool>> CreateEqualityExpressionForId(TPrimaryKey id)
-        {
-            var lambdaParam = Expression.Parameter(typeof(TEntity));
-            var lambdaBody = Expression.Equal(
-                Expression.PropertyOrField(lambdaParam, "Id"),
-                Expression.Constant(id, typeof(TPrimaryKey))
-                );
-
-            return Expression.Lambda<Func<TEntity, bool>>(lambdaBody, lambdaParam);
-        }
     }
 
     /// <summary>
     /// 主键为Guid类型的仓储基类
     /// </summary>
     /// <typeparam name="TEntity">实体类型</typeparam>
-    public abstract class FonourRepositoryBase<TEntity> : FonourRepositoryBase<TEntity, Int32> where TEntity : Entity
+    public abstract class ServiceBase<TEntity> : ServiceBase<TEntity, Int32> where TEntity : Entity
     {
-        public FonourRepositoryBase(EntityDbContext dbContext) : base(dbContext)
+        public ServiceBase(IRepository<TEntity> repository) : base(repository)
         {
         }
     }

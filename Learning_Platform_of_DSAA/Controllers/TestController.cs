@@ -8,25 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using DSAA.EntityFrameworkCore;
 using DSAA.EntityFrameworkCore.Entity;
 
-namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
+namespace Learning_Platform_of_DSAA.Controllers
 {
-    [Area("Teacher")]
-    public class ProblemsController : Controller
+    public class TestController : Controller
     {
         private readonly EntityDbContext _context;
 
-        public ProblemsController(EntityDbContext context)
+        public TestController(EntityDbContext context)
         {
             _context = context;
         }
 
-        // GET: Teacher/Problems
+        // GET: Test
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Problem.ToListAsync());
+            return View(await _context.Uesrs.ToListAsync());
         }
 
-        // GET: Teacher/Problems/Details/5
+        // GET: Test/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,39 +33,39 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
                 return NotFound();
             }
 
-            var problem = await _context.Problem
+            var user = await _context.Uesrs
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (problem == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return View(problem);
+            return View(user);
         }
 
-        // GET: Teacher/Problems/Create
+        // GET: Test/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Teacher/Problems/Create
+        // POST: Test/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Description,Input,Output,SampleInput,SampleOutput,Hint,TimeLimit,MemoryLimit,SubmitCount,SolvedCount,LastDate,IsHide,Id")] Problem problem)
+        public async Task<IActionResult> Create([Bind("UserName,PassWord,NickName,Email,Phone,SubmitCount,SolvedCount,IsLocked,CreateDate,LastDate,Rank,Id")] User user)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(problem);
+                _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(problem);
+            return View(user);
         }
 
-        // GET: Teacher/Problems/Edit/5
+        // GET: Test/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +73,22 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
                 return NotFound();
             }
 
-            var problem = await _context.Problem.FindAsync(id);
-            if (problem == null)
+            var user = await _context.Uesrs.FindAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
-            return View(problem);
+            return View(user);
         }
 
-        // POST: Teacher/Problems/Edit/5
+        // POST: Test/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Title,Description,Input,Output,SampleInput,SampleOutput,Hint,TimeLimit,MemoryLimit,SubmitCount,SolvedCount,LastDate,IsHide,Id")] Problem problem)
+        public async Task<IActionResult> Edit(int id, [Bind("UserName,PassWord,NickName,Email,Phone,SubmitCount,SolvedCount,IsLocked,CreateDate,LastDate,Rank,Id")] User user)
         {
-            if (id != problem.Id)
+            if (id != user.Id)
             {
                 return NotFound();
             }
@@ -98,12 +97,12 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
             {
                 try
                 {
-                    _context.Update(problem);
+                    _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProblemExists(problem.Id))
+                    if (!UserExists(user.Id))
                     {
                         return NotFound();
                     }
@@ -114,10 +113,10 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(problem);
+            return View(user);
         }
 
-        // GET: Teacher/Problems/Delete/5
+        // GET: Test/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,30 +124,30 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
                 return NotFound();
             }
 
-            var problem = await _context.Problem
+            var user = await _context.Uesrs
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (problem == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return View(problem);
+            return View(user);
         }
 
-        // POST: Teacher/Problems/Delete/5
+        // POST: Test/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var problem = await _context.Problem.FindAsync(id);
-            _context.Problem.Remove(problem);
+            var user = await _context.Uesrs.FindAsync(id);
+            _context.Uesrs.Remove(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProblemExists(int id)
+        private bool UserExists(int id)
         {
-            return _context.Problem.Any(e => e.Id == id);
+            return _context.Uesrs.Any(e => e.Id == id);
         }
     }
 }

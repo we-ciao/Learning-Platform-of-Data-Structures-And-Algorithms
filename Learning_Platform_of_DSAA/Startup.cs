@@ -51,11 +51,11 @@ namespace Learning_Platform_of_DSAA
             //反射加载接口实现类，集中注册服务
             AddScopedByClassName(services, "DSAA.Repository", x =>
                  x.Name != "IRepository" &&
-                 x.Name != "FonourRepositoryBase"
+                 x.Name != "RepositoryBase"
                 );
             AddScopedByClassName(services, "DSAA.Service", x =>
-                 1 == 1
-
+                 x.Name != "IService" &&
+                 x.Name != "ServiceBase"
             );
 
             services.AddMvc(config =>

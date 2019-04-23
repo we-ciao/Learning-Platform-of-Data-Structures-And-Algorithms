@@ -2,22 +2,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Text;
 
-namespace DSAA.Repository.IRepository
+namespace DSAA.Service.IService
 {
     /// <summary>
-    /// 仓储接口定义
+    /// 服务接口定义
     /// </summary>
-    public interface IRepository
+    public interface IService
     {
 
     }
+
     /// <summary>
     /// 定义泛型仓储接口
     /// </summary>
     /// <typeparam name="TEntity">实体类型</typeparam>
     /// <typeparam name="TPrimaryKey">主键类型</typeparam>
-    public interface IRepository<TEntity, TPrimaryKey> : IRepository where TEntity : Entity<TPrimaryKey>
+    public interface IService<TEntity, TPrimaryKey> : IService where TEntity : Entity<TPrimaryKey>
     {
         /// <summary>
         /// 获取实体集合
@@ -38,8 +40,7 @@ namespace DSAA.Repository.IRepository
         /// <param name="id">实体主键</param>
         /// <returns></returns>
         TEntity Get(TPrimaryKey id);
-
-
+        
         /// <summary>
         /// 根据主键查询实体
         /// </summary>
@@ -78,7 +79,7 @@ namespace DSAA.Repository.IRepository
         /// 新增或更新实体
         /// </summary>
         /// <param name="entity">实体</param>
-        string InsertOrUpdate(TEntity entity);
+        void InsertOrUpdate(TEntity entity);
 
         /// <summary>
         /// 删除实体
@@ -102,8 +103,11 @@ namespace DSAA.Repository.IRepository
     /// 默认Guid主键类型仓储
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public interface IRepository<TEntity> : IRepository<TEntity, Int32> where TEntity : Entity
+    public interface IService<TEntity> : IService<TEntity, Int32> where TEntity : Entity
     {
 
     }
+
+
+
 }

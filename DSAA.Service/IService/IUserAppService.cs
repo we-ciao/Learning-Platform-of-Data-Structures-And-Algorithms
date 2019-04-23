@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace DSAA.Service.IService
 {
-    public interface IUserAppService
+    public interface IUserAppService:IService<User>
     {
         /// <summary>
         /// 用户注册

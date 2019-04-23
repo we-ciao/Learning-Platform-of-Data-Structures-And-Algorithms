@@ -10,7 +10,7 @@ namespace DSAA.Repository
     /// <summary>
     /// 用户管理仓储实现
     /// </summary>
-    public class UserRepository : FonourRepositoryBase<User>, IUserRepository
+    public class UserRepository : RepositoryBase<User>, IUserRepository
     {
         public UserRepository(EntityDbContext dbcontext) : base(dbcontext)
         {

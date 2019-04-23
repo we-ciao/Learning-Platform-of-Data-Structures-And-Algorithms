@@ -11,7 +11,7 @@ namespace DSAA.Service
     /// <summary>
     /// 用户管理服务
     /// </summary>
-    public class UserAppService : IUserAppService
+    public class UserAppService : ServiceBase<User>, IUserAppService
     {
         //用户管理仓储接口
         private readonly IUserRepository _userReporitory;
@@ -21,7 +21,7 @@ namespace DSAA.Service
         /// 构造函数 实现依赖注入
         /// </summary>
         /// <param name="userRepository">仓储对象</param>
-        public UserAppService(IHttpContextAccessor httpContextAccessor, IUserRepository userRepository)
+        public UserAppService(IHttpContextAccessor httpContextAccessor, IUserRepository userRepository) : base(userRepository)
         {
             _userReporitory = userRepository;
             _httpContextAccessor = httpContextAccessor;

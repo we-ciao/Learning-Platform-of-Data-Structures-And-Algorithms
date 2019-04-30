@@ -54,6 +54,20 @@ namespace DSAA.EntityFrameworkCore
             context.Uesrs.Add(teacher);
             context.Uesrs.Add(student);
 
+            Compiler compiler = new Compiler
+            {
+                Name = "gcc",
+                isForbidden = false,
+                isScript = false,
+                CodeFormat = "",
+                ExecutionFormat = "",
+                CompilerPath = "Compilers\\mingw\\bin\\g++.exe",
+                CompilerArgs = "-w -o2 <tempdir>src.cpp -o <tempdir>program.exe",
+                RunnerPath = "<tempdir>program.exe",
+                RunnerArgs = ""
+            };
+            context.Compilers.Add(compiler);
+
 
             context.SaveChanges();
 

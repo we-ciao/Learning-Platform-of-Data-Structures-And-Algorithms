@@ -65,12 +65,16 @@ else
     <li class="has_sub">
         <a href="javascript:void(0);" class="waves-effect">
             <i class="mdi mdi-album"></i> <span>
-                Problem
+                题目
             </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span>
         </a>
         <ul class="list-unstyled">
-            <li><a href="ui-components.html">Problem Set</a></li>
-            <li><a href="ui-buttons.html">Problem Category</a></li>
+            <li>
+                <a asp-area="Student" asp-controller="Problem" asp-action="List" class="waves-effect">题目集</a>
+            </li>
+            <li>
+                <a asp-area="Student" asp-controller="Problem" asp-action="Category" class="waves-effect">题目目录</a>
+            </li>
         </ul>
     </li>
 

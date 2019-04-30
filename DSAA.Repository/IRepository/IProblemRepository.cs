@@ -1,7 +1,4 @@
 ﻿using DSAA.EntityFrameworkCore.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DSAA.Repository.IRepository
 {

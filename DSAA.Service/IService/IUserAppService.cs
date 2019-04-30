@@ -15,6 +15,10 @@ namespace DSAA.Service.IService
         void SetCurrentUser(User user);
 
 
+        /// <summary>
+        /// 获取当前登陆的用户实体
+        /// </summary>
+        User GetCurrentUser();
 
     }
 }

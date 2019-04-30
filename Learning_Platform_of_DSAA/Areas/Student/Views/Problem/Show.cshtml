@@ -1,0 +1,157 @@
+﻿@model DSAA.EntityFrameworkCore.Entity.Problem
+
+
+<div class="">
+    <div class="page-header-title">
+        <h4 class="page-title text-center">
+            @Model.Title
+        </h4>
+    </div>
+</div>
+
+<div class="page-content-wrapper ">
+
+    <div class="container">
+
+        <!-- Row start -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-body text-center">
+                        <p>
+                            时间限制(Time Limit): <span class="label label-info" data-toggle="tooltip" data-placement="top" title="This is Design">@Model.TimeLimit</span> MS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            内存限制(Memory Limit): <span class="label label-info" data-toggle="tooltip" data-placement="top" title="This is Design">@Model.MemoryLimit</span> KB <br />
+                            总计提交(Total Submission(s)): <span class="label label-info" data-toggle="tooltip" data-placement="top" title="This is Design">@Model.SubmitCount</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            通过提交(Accepted Submission(s)): <span class="label label-info" data-toggle="tooltip" data-placement="top" title="This is Design">@Model.SolvedCount</span>
+
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Row -->
+        <!-- Row start -->
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="m-t-0">
+                    题目描述  <small>Description</small>
+                </h3>
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+
+                        <p class="text-muted m-b-0">
+                            @Html.Raw(@Model.Description)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Row -->
+        <!-- Row start -->
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="m-t-0">
+                    题目输入  <small>Input</small>
+                </h3>
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+
+                        <p class="text-muted  m-b-0">
+                            @Html.Raw(@Model.Input)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Row -->
+        <!-- Row start -->
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="m-t-0">
+                    题目输出  <small>Output</small>
+                </h3>
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+
+                        <p class="text-muted  m-b-0">
+                            @Html.Raw(@Model.Output)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Row -->
+        <!-- Row start -->
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="m-t-0">
+                    样例输入  <small>Sample Input</small>
+                </h3>
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+
+                        <blockquote class="m-b-0">
+                            <p class="text-muted  m-b-0">
+                                @Html.Raw(@Model.SampleInput)
+                            </p>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Row -->
+        <!-- Row start -->
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="m-t-0">
+                    样例输出  <small>Sample Output</small>
+                </h3>
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+
+                        <blockquote class="m-b-0">
+                            <p class="text-muted  m-b-0">
+                                @Html.Raw(@Model.SampleOutput)
+                            </p>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Row -->
+
+        @if (!String.IsNullOrEmpty(Model.Hint))
+        {
+            <!-- Row start -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="m-t-0">
+                        提示  <small>Hint</small>
+                    </h3>
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            <p class="text-muted  m-b-0">
+                                @Html.Raw(@Model.Hint)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Row -->
+        }
+
+
+        <!-- Row start -->
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a asp-controller="Problem" asp-action="Submit" asp-route-id="@Model.Id" class="waves-effect">
+                    <button type="button" class="btn btn-default waves-effect waves-ligh">提交此题</button>
+                </a>
+            </div>
+        </div>
+        <!-- End of Row -->
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

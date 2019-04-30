@@ -87,5 +87,37 @@ namespace DSAA.Service
             }
         }
 
+        /// <summary>
+        /// 获取当前登陆的用户名
+        /// </summary>
+        public String GetCurrentUserName()
+        {
+            string UserNickName = null;
+            byte[] bytes;
+            if (_httpContextAccessor.HttpContext.Session.TryGetValue("UserNickName", out bytes))
+            {
+                UserNickName = System.Text.Encoding.UTF8.GetString(bytes);
+            }
+
+            return UserNickName;
+        }
+
+
+        /// <summary>
+        /// 获取当前登陆的用户实体
+        /// </summary>
+        public User GetCurrentUser()
+        {
+            int UserID = -1;
+            byte[] bytes;
+            if (_httpContextAccessor.HttpContext.Session.TryGetValue("UserId", out bytes))
+            {
+                UserID = Convert.ToInt32(System.Text.Encoding.UTF8.GetString(bytes));
+            }
+
+            return _userReporitory.Get(UserID);
+        }
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -96,6 +97,11 @@ namespace DSAA.EntityFrameworkCore.Entity
         /// 是否隐藏
         /// </summary>
         public Boolean IsHide { get; set; }
+
+        /// <summary>
+        /// 分类题目
+        /// </summary>
+        public virtual List<ProblemCategory> Categorys { get; set; }
 
         /// <summary>
         /// 获取AC比率

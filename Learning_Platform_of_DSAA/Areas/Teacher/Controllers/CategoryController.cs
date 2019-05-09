@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DSAA.EntityFrameworkCore.Entity;
+﻿using DSAA.EntityFrameworkCore.Entity;
 using DSAA.Service.IService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
 {
@@ -86,49 +85,6 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
             return View();
         }
 
-        ///// <summary>
-        ///// 题目分类添加
-        ///// </summary>
-        ///// <param name="form">Form集合</param>
-        ///// <returns>操作后的结果</returns>
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult CategoryAdd(Category entity)
-        //{
-
-        //    return ResultToMessagePage(ProblemCategoryManager.AdminInsertProblemCategory, entity, "Your have added problem category successfully!");
-        //}
-
-        ///// <summary>
-        ///// 题目分类编辑页面
-        ///// </summary>
-        ///// <param name="id">题目分类ID</param>
-        ///// <returns>操作后的结果</returns>
-        //public ActionResult CategoryEdit(Int32 id = -1)
-        //{
-        //    return ResultToView("CategoryEdit", ProblemCategoryManager.AdminGetProblemCategory, id);
-        //}
-
-        ///// <summary>
-        ///// 题目分类编辑
-        ///// </summary>
-        ///// <param name="id">题目分类ID</param>
-        ///// <param name="form">Form集合</param>
-        ///// <returns>操作后的结果</returns>
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult CategoryEdit(Int32 id, FormCollection form)
-        //{
-        //    ProblemCategoryEntity entity = new ProblemCategoryEntity()
-        //    {
-        //        TypeID = id,
-        //        Title = form["title"],
-        //        Order = form["order"].ToInt32(0)
-        //    };
-
-        //    return ResultToMessagePage(ProblemCategoryManager.AdminUpdateProblemCategory, entity, "Your have edited problem category successfully!");
-        //}
-
         /// <summary>
         /// 题目分类删除
         /// </summary>
@@ -143,17 +99,17 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
             return Json(_problemCategoryAppService.Save()); ;
         }
 
-        ///// <summary>
-        ///// 题目分类编辑页面
-        ///// </summary>
-        ///// <param name="id">题目分类ID</param>
-        ///// <returns>操作后的结果</returns>
-        //public ActionResult CategorySet(Int32 id = -1)
-        //{
-        //    ViewBag.ProblemID = (id >= 0 ? id.ToString() : "");
-
-        //    return ResultToView(ProblemCategoryItemManager.AdminGetProblemCategoryItemList, id);
-        //}
+        /// <summary>
+        /// 题目分类编辑页面
+        /// </summary>
+        /// <param name="id">题目分类ID</param>
+        /// <returns>操作后的结果</returns>
+        public ActionResult CategorySet(Int32 id = -1)
+        {
+            ViewBag.ProblemID = (id >= 0 ? id.ToString() : "");
+            ViewBag.CategoryList = _problemCategoryAppService.GetAllList();
+            return View();
+        }
 
         ///// <summary>
         ///// 题目分类设置

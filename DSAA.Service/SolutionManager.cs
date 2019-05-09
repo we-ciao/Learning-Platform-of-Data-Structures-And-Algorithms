@@ -4,6 +4,7 @@ using DSAA.Service.IService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 
 namespace DSAA.Service
 {
@@ -12,6 +13,24 @@ namespace DSAA.Service
     /// </summary>
     public class SolutionManager : ServiceBase<Solution>, ISolutionAppService
     {
+        #region 常量
+        /// <summary>
+        /// 问题页面页面大小
+        /// </summary>
+        private const Int32 STATUS_PAGE_SIZE = 20;
+        #endregion
+
+        #region 字段
+        /// <summary>
+        /// 同时只有一个Judge请求Pending
+        /// </summary>
+        private static Object _selectLock = new Object();
+
+        /// <summary>
+        /// 同时只有一个Judge更新结果
+        /// </summary>
+        private static Object _updateLock = new Object();
+        #endregion
 
         //用户管理仓储接口
         private readonly IUserAppService _userAppService;
@@ -64,6 +83,63 @@ namespace DSAA.Service
 
             return success ? null : "提交失败";
         }
+
+
+        /// <summary>
+        /// 获取最早等待评测的一个提交
+        /// </summary>
+        /// <param name="count">获取个数</param>
+        /// <param name="languageSupport">支持语言</param>
+        /// <returns>提交实体</returns>
+        public List<Solution> JudgeGetPendingSolution(Int32 count, Compiler[] languageSupport)
+        {
+            lock (_selectLock)
+            {
+                return _solutionReporitory.GetPendingEntities(count, 0, languageSupport);
+            }
+        }
+
+        /// <summary>
+        /// 更新一条提交(更新所有评测信息)
+        /// </summary>
+        /// <param name="entity">对象实体</param>
+        /// <param name="error">编译错误信息</param>
+        /// <returns>是否成功更新</returns>
+        public Boolean JudgeUpdateSolutionAllResult(Solution entity, String error)
+        {
+            if (entity == null) return false;
+
+            lock (_updateLock)
+            {
+                entity.JudgeTime = DateTime.Now;
+                _solutionReporitory.Update(entity);
+                if (_solutionReporitory.Save() > 0)
+                {
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 更新一条提交(更新所有评测信息)
+        /// </summary>
+        /// <param name="entity">对象实体</param>
+        /// <param name="error">编译错误信息</param>
+        /// <returns>是否成功更新</returns>
+        public int GetStatueCount(int userid)
+        {
+
+            return _solutionReporitory.GetStatueCount(userid);
+        }
+
+
+
     }
 
 }

@@ -2,7 +2,6 @@
 using DSAA.Service.IService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace Learning_Platform_of_DSAA.Areas.Student.Controllers
 {
@@ -30,7 +29,7 @@ namespace Learning_Platform_of_DSAA.Areas.Student.Controllers
         public IActionResult List()
         {
             var list = _problemAppService.GetAllList();
-            return View(list.Where(x => x.IsHide == false));
+            return View(list);
         }
 
         /// <summary>
@@ -64,8 +63,7 @@ namespace Learning_Platform_of_DSAA.Areas.Student.Controllers
         /// <param name="id">提交ID</param>
         /// <returns>操作后的结果</returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Submit(string code, int compilerid, int id = -1, int contest = -1)
+        public ActionResult Submit(int id , int compilerid, string code, int contest = -1)
         {
             ViewBag.ProblemID = id;
 
@@ -75,8 +73,8 @@ namespace Learning_Platform_of_DSAA.Areas.Student.Controllers
                 LanguageType = _compilerAppService.Get(compilerid),
                 Problem = _problemAppService.Get(id)
             };
-          //  if(contest != -1)
-         //       entity.Contest=_con
+            //  if(contest != -1)
+            //       entity.Contest=_con
 
             if (entity.LanguageType == null)
             {
@@ -92,7 +90,7 @@ namespace Learning_Platform_of_DSAA.Areas.Student.Controllers
                 return View();
             }
 
-            return RedirectToAction("List", "Status");
+            return RedirectToAction("Index", "Status");
         }
 
 

@@ -47,7 +47,18 @@ else if (ViewBag.UserRole == "Teacher")
             <li><a asp-area="Teacher" asp-controller="Problem" asp-action="Add">题目信息添加</a></li>
             <li><a asp-area="Teacher" asp-controller="Problem" asp-action="Import">题目信息导入</a></li>
             <li><a asp-area="Teacher" asp-controller="Problem" asp-action="List">题目综合管理</a></li>
-            <li><a href="ui-buttons.html">题目分类管理</a></li>
+        </ul>
+    </li>
+
+    <li class="has_sub">
+        <a href="javascript:void(0);" class="waves-effect">
+            <i class="mdi mdi-album"></i> <span>
+                题目分类管理
+            </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span>
+        </a>
+        <ul class="list-unstyled">
+            <li><a asp-area="Teacher" asp-controller="Category" asp-action="Add">题目分类添加</a></li>
+            <li><a asp-area="Teacher" asp-controller="Category" asp-action="List">题目分类管理</a></li>
         </ul>
     </li>
 
@@ -64,7 +75,7 @@ else
 
     <li class="has_sub">
         <a href="javascript:void(0);" class="waves-effect">
-            <i class="mdi mdi-album"></i> <span>
+            <i class="mdi mdi-book-open-page-variant"></i> <span>
                 题目
             </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span>
         </a>
@@ -81,7 +92,7 @@ else
     <li class="has_sub">
         <a href="javascript:void(0);" class="waves-effect">
             <i class="mdi mdi-album"></i> <span>
-                Contest
+                在线学习
             </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span>
         </a>
         <ul class="list-unstyled">
@@ -93,24 +104,24 @@ else
 
     <li>
         <a href="index.html" class="waves-effect">
-            <i class="mdi mdi-home"></i><span>
-                Ranklist<span class="badge badge-primary pull-right">1</span>
+            <i class="mdi mdi-chart-areaspline"></i><span>
+                排行榜
+            </span>
+        </a>
+    </li>
+
+    <li>
+        <a asp-controller="Status" asp-action="Index"  class="waves-effect">
+            <i class="mdi mdi-xml"></i><span>
+                评测状态<span class="badge badge-primary pull-right">@ViewBag.StatueCount</span>
             </span>
         </a>
     </li>
 
     <li>
         <a href="index.html" class="waves-effect">
-            <i class="mdi mdi-home"></i><span>
-                Status<span class="badge badge-primary pull-right">1</span>
-            </span>
-        </a>
-    </li>
-
-    <li>
-        <a href="index.html" class="waves-effect">
-            <i class="mdi mdi-home"></i><span>
-                Discuss<span class="badge badge-primary pull-right">1</span>
+            <i class="mdi mdi-message-processing"></i><span>
+                讨论<span class="badge badge-primary pull-right">1</span>
             </span>
         </a>
     </li>

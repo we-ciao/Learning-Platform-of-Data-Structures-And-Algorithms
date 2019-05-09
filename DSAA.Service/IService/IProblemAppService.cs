@@ -44,5 +44,19 @@ namespace DSAA.Service.IService
         /// <param name="file">上传文件</param>
         /// <returns>是否保存成功</returns>
         String AdminSaveProblemData(Int32 problemID, IFormFile file);
+
+        /// <summary>
+        /// 获取题目数据真实路径
+        /// </summary>
+        /// <param name="pid">题目ID</param>
+        /// <returns>数据真实路径，若不存在返回null</returns>
+        String GetProblemDataRealPath(Int32 pid);
+
+        /// <summary>
+        /// 获取题目数据最后更新日期
+        /// </summary>
+        /// <param name="pid">题目ID</param>
+        /// <returns>最后更新日期</returns>
+        String GetProblemDataVersion(Int32 pid);
     }
 }

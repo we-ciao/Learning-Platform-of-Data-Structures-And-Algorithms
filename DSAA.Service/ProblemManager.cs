@@ -360,7 +360,32 @@ namespace DSAA.Service
         }
 
 
+        /// <summary>
+        /// 获取题目数据最后更新日期
+        /// </summary>
+        /// <param name="pid">题目ID</param>
+        /// <returns>最后更新日期</returns>
+        public  String GetProblemDataVersion(Int32 pid)
+        {
+            String version = "";
 
+            if (String.IsNullOrEmpty(version))
+            {
+                String filePath = GetProblemDataRealPath(pid);
+
+                if (!String.IsNullOrEmpty(filePath))
+                {
+                    try
+                    {
+                        ProblemDataReader reader = new ProblemDataReader(filePath);
+                        version = reader.LastModified;
+                    }
+                    catch { }
+                }
+            }
+
+            return version;
+        }
         #endregion
 
     }

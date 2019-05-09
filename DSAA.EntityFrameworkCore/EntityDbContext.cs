@@ -20,6 +20,23 @@ namespace DSAA.EntityFrameworkCore
         public virtual DbSet<Solution> Solution { get; set; }
         public virtual DbSet<Contest> Contest { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProblemCategory>()
+                .HasKey(t => new { t.ProblemId, t.CategoryId });
+
+            modelBuilder.Entity<ProblemCategory>()
+                .HasOne(pt => pt.Problem)
+                .WithMany(p => p.Categorys)
+                .HasForeignKey(pt => pt.ProblemId);
+
+
+            modelBuilder.Entity<ProblemCategory>()
+                .HasOne(pt => pt.Category)
+                .WithMany(p => p.Problems)
+                .HasForeignKey(pt => pt.CategoryId);
+
+        }
 
     }
 }

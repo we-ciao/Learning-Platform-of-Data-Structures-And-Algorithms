@@ -1,4 +1,5 @@
 ﻿using DSAA.EntityFrameworkCore.Entity;
+using System;
 using System.Threading.Tasks;
 
 namespace DSAA.Service.IService
@@ -20,5 +21,9 @@ namespace DSAA.Service.IService
         /// </summary>
         User GetCurrentUser();
 
+        /// <summary>
+        /// 获取当前登陆的用户名
+        /// </summary>
+        String GetCurrentUserName();
     }
 }

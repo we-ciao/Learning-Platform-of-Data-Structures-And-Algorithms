@@ -1,8 +1,10 @@
 ﻿using DSAA.EntityFrameworkCore;
 using DSAA.EntityFrameworkCore.Entity;
 using DSAA.Repository.IRepository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DSAA.Repository
@@ -16,8 +18,6 @@ namespace DSAA.Repository
         {
 
         }
-
-
 
     }
 }

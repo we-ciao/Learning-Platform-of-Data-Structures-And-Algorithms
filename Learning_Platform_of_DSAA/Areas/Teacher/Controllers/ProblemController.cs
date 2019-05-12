@@ -22,11 +22,6 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
             _problemAppService = problemAppService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         /// <summary>
         /// 题目管理页面
         /// </summary>

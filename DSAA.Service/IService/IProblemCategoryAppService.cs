@@ -14,5 +14,9 @@ namespace DSAA.Service.IService
         /// <returns>是否成功增加</returns>
         string InsertOrUpdateProblem(Category entity);
 
+        /// <summary>
+        /// 分类添加题目
+        /// </summary>
+        int CategoryAddProblem(Int32 id, int[] ProblemList);
     }
 }

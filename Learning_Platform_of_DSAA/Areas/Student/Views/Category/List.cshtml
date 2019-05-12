@@ -1,5 +1,4 @@
-﻿@model IEnumerable<DSAA.EntityFrameworkCore.Entity.Category>
-
+﻿@model Tuple<List<Category>, int[]>
 @{
     ViewData["Title"] = "题目分类管理";
 }
@@ -54,44 +53,37 @@
                                                         <td>分类名称</td>
                                                         <td>分类顺序</td>
                                                         <td>分类题目数量</td>
-                                                        <td>设置</td>
-                                                        <td>编辑</td>
-                                                        <td>删除</td>
+                                                        <td>完成数量</td>
+                                                        <td>查看</td>
                                                     </tr>
                                                 </thead>
 
 
                                                 <tbody>
-                                                    @foreach (var item in Model)
+                                                    @foreach (var item in Model.Item1)
                                                     {
-                                                    <tr>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.Id)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.Title)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.Order)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.Problems.Count)
-                                                        </td>
-                                                        <td>
-                                                            <a asp-area="Teacher" asp-controller="Category" asp-action="CategorySet" asp-route-id="@item.Id" class="waves-effect">
-                                                                <button type="button" class="btn btn-success waves-effect waves-ligh">设置</button>
-                                                            </a>
-                                                        </td>
-
-                                                        <td>
-                                                            <a asp-area="Teacher" asp-controller="Category" asp-action="Add" asp-route-id="@item.Id" class="waves-effect">
-                                                                <button type="button" class="btn btn-warning waves-effect waves-ligh">编辑</button>
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-danger waves-effect waves-ligh" onclick="deletes(@item.Id,this)">删除</button>
-                                                        </td>
-                                                    </tr>
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Id)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Title)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Order)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Problems.Count)
+                                                            </td>
+                                                            <td>
+                                                                @Model.Item2[item.Id]
+                                                            </td>
+                                                            <td>
+                                                                <a asp-area="Student" asp-controller="Category" asp-action="ProblemList" asp-route-id="@item.Id" class="waves-effect">
+                                                                    <button type="button" class="btn btn-primary waves-effect waves-ligh">查看</button>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
                                                     }
 
                                                 </tbody>

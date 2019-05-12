@@ -1,0 +1,93 @@
+﻿@model Tuple<List<ProblemCategory>, List<Problem>>
+
+@{
+    ViewData["Title"] = "题目分类设置";
+}
+
+<div class="">
+    <div class="page-header-title">
+        <h4 class="page-title">@ViewData["Title"] </h4>
+    </div>
+</div>
+
+<div class="page-content-wrapper ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-body">
+                                        <address>
+                                            1. 您可以在本页设置分类的题目。<br />
+                                            2. 一个题目可以选择多个分类，请将分类的题目打勾。
+                                        </address>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+
+                                <div class="panel-body">
+
+
+                                    <form asp-controller="Category" asp-action="CategorySet" cmethod="post" class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"><span class="star">*</span>分类名称</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" name="CategoryName" readonly="readonly" value="@ViewBag.ProblemID" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12  text-center"><span class="star">*</span>分类包含题目<span class="supplementary">（可重复）</span></label>
+                                        </div>
+                                        <div class="form-group">
+                                            @foreach (var Item in Model.Item1)
+                                            {
+                                                <div class="checkbox checkbox-primary checkbox-inline">
+                                                    <input type="checkbox" id="inlineCheckbox_@Item.ProblemId" value="@Item.ProblemId" name="ProblemList" checked="checked">
+                                                    <label for="inlineCheckbox_@Item.ProblemId"> @Item.Problem.Title </label>
+                                                </div>
+                                            }
+                                            @foreach (var Item in Model.Item2)
+                                            {
+                                                <div class="checkbox checkbox-inline">
+                                                    <input type="checkbox" id="inlineCheckbox_@Item.Id" value="@Item.Id" name="ProblemList">
+                                                    <label for="inlineCheckbox_@Item.Id"> @Item.Title </label>
+                                                </div>
+                                            }
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-10 control-label"></label>
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                提交
+                                            </button>
+                                            <button type="reset" class="btn btn-default waves-effect m-l-5" onclick="Cancel()">
+                                                取消
+                                            </button>
+                                        </div>
+
+                                    </form>
+                                </div> <!-- panel-body -->
+                            </div>
+                        </div> <!-- end row -->
+                    </div> <!-- panel body -->
+                </div> <!-- end panel -->
+
+            </div> <!-- end col -->
+
+        </div>
+        <!-- end row -->
+
+
+    </div><!-- container -->
+</div> <!-- Page content Wrapper -->
+
+<script>
+    function Cancel() {
+        window.location.href ="/Teacher/Category/List";
+
+    }
+
+</script>

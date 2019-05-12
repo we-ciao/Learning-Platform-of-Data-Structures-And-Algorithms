@@ -103,26 +103,33 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
         /// 题目分类编辑页面
         /// </summary>
         /// <param name="id">题目分类ID</param>
-        /// <returns>操作后的结果</returns>
         public ActionResult CategorySet(Int32 id = -1)
         {
-            ViewBag.ProblemID = (id >= 0 ? id.ToString() : "");
-            ViewBag.CategoryList = _problemCategoryAppService.GetAllList();
-            return View();
+            var category = _problemCategoryAppService.Get(id);
+            ViewBag.ProblemID = category.Title;
+            var i1 = category.Problems;
+            var tem = i1.Select(x => x.Problem);
+            var i2 = _problemAppService.GetAllList().Except(tem).ToList();
+            Tuple<List<ProblemCategory>, List<Problem>> res = new Tuple<List<ProblemCategory>, List<Problem>>(i1, i2);
+            return View(res);
         }
 
-        ///// <summary>
-        ///// 题目分类设置
-        ///// </summary>
-        ///// <param name="id">题目ID</param>
-        ///// <param name="form">Form集合</param>
-        ///// <returns>操作后的结果</returns>
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult CategorySet(Int32 id, FormCollection form)
-        //{
-        //    return ResultToMessagePage(ProblemCategoryItemManager.AdminUpdateProblemCategoryItems, id, form["source"], form["target"], "Your have updated problem type successfully!");
-        //}
+        /// <summary>
+        /// 题目分类设置
+        /// </summary>
+        /// <param name="id">题目分类ID</param>
+        /// <param name="ProblemList">ProblemList集合</param>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CategorySet(Int32 id, int[] ProblemList)
+        {
+            if (_problemCategoryAppService.CategoryAddProblem(id, ProblemList) > 0)
+                ViewBag.SweetInfo = "操作成功";
+            else
+                ViewBag.SweetInfo = "操作失败";
+
+            return CategorySet(id);
+        }
 
     }
 }

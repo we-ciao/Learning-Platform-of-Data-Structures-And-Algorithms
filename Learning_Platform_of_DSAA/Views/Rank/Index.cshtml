@@ -1,6 +1,8 @@
-﻿@model Tuple<List<Category>, int[]>
+﻿@model IEnumerable<DSAA.EntityFrameworkCore.Entity.User>
+
 @{
-    ViewData["Title"] = "题目分类目录";
+    ViewData["Title"] = "题目集";
+    int i = 1;
 }
 
 
@@ -34,46 +36,43 @@
                         <div class="row">
                             <div class="col-md-12">
 
-
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <table id="datatable" class="table table-striped table-bordered text-center">
+                                            <table id="datatable" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <td>分类ID</td>
-                                                        <td>分类名称</td>
-                                                        <td>分类顺序</td>
-                                                        <td>分类题目数量</td>
-                                                        <td>完成数量</td>
-                                                        <td>查看</td>
+                                                        <td>排名</td>
+                                                        <td>用户名</td>
+                                                        <td>昵称</td>
+                                                        <td>通过数</td>
+                                                        <td>提交总数</td>
+                                                        <td>通过率</td>
                                                     </tr>
                                                 </thead>
 
 
                                                 <tbody>
-                                                    @foreach (var item in Model.Item1)
+                                                    @foreach (var item in Model)
                                                     {
                                                         <tr>
                                                             <td>
-                                                                @Html.DisplayFor(modelItem => item.Id)
+                                                                @(i++)
                                                             </td>
                                                             <td>
-                                                                @Html.DisplayFor(modelItem => item.Title)
+                                                                @Html.DisplayFor(modelItem => item.UserName)
                                                             </td>
                                                             <td>
-                                                                @Html.DisplayFor(modelItem => item.Order)
+                                                                @Html.DisplayFor(modelItem => item.NickName)
                                                             </td>
                                                             <td>
-                                                                @Html.DisplayFor(modelItem => item.Problems.Count)
+                                                                @item.SolvedCount.ToString()
                                                             </td>
                                                             <td>
-                                                                @Model.Item2[item.Id]
+                                                                @item.SubmitCount.ToString()
                                                             </td>
                                                             <td>
-                                                                <a asp-area="Student" asp-controller="Category" asp-action="ProblemList" asp-route-id="@item.Id" class="waves-effect">
-                                                                    <button type="button" class="btn btn-primary waves-effect waves-ligh">查看</button>
-                                                                </a>
+                                                                @item.Ratio.ToString("F2")%
                                                             </td>
                                                         </tr>
                                                     }
@@ -153,7 +152,7 @@
     function deletes(id, obj) {
         swal({
             title: "操作确认",
-            text: "删除后，您将无法恢复此分类！",
+            text: "删除后，您将无法恢复此题目！",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -181,6 +180,7 @@
     }
 </script>
 
+
 <script>
 
     !function ($) {
@@ -206,11 +206,10 @@
             });
         },
             DataTable.prototype.init = function () {
-
+                //creating demo tabels
                 $('#datatable').dataTable({
-                    "order": [[2, "asc"]]
+                    "order": [[5, "desc"]]
                 });
-
                 $('#datatable-keytable').DataTable({ keys: true });
                 $('#datatable-responsive').DataTable();
                 $('#datatable-scroller').DataTable({

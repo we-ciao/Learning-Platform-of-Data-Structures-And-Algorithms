@@ -18,7 +18,8 @@ namespace DSAA.EntityFrameworkCore
         public virtual DbSet<Compiler> Compilers { get; set; }
         public virtual DbSet<Problem> Problem { get; set; }
         public virtual DbSet<Solution> Solution { get; set; }
-        public virtual DbSet<Contest> Contest { get; set; }
+        public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<Learn> Learns { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +35,21 @@ namespace DSAA.EntityFrameworkCore
             modelBuilder.Entity<ProblemCategory>()
                 .HasOne(pt => pt.Category)
                 .WithMany(p => p.Problems)
+                .HasForeignKey(pt => pt.CategoryId);
+
+
+            modelBuilder.Entity<LearnCategory>()
+                .HasKey(t => new { t.LearnId, t.CategoryId });
+
+            modelBuilder.Entity<LearnCategory>()
+                .HasOne(pt => pt.Learn)
+                .WithMany(p => p.Categorys)
+                .HasForeignKey(pt => pt.LearnId);
+
+
+            modelBuilder.Entity<LearnCategory>()
+                .HasOne(pt => pt.Category)
+                .WithMany(p => p.Learns)
                 .HasForeignKey(pt => pt.CategoryId);
 
         }

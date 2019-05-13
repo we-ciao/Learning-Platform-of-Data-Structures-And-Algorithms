@@ -66,12 +66,7 @@ namespace DSAA.EntityFrameworkCore.Entity
         /// 代码长度(Byte)
         /// </summary>
         public Int32 CodeLength { get; set; }
-
-        /// <summary>
-        /// 竞赛ID
-        /// </summary>
-        public virtual Contest Contest { get; set; }
-
+        
         /// <summary>
         /// 竞赛题目ID
         /// </summary>

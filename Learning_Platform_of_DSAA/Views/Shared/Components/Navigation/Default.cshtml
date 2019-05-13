@@ -39,7 +39,7 @@ else if (ViewBag.UserRole == "Teacher")
 
     <li class="has_sub">
         <a href="javascript:void(0);" class="waves-effect">
-            <i class="mdi mdi-album"></i> <span>
+            <i class="mdi mdi-checkbox-multiple-marked-outline"></i> <span>
                 题目管理
             </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span>
         </a>
@@ -52,7 +52,7 @@ else if (ViewBag.UserRole == "Teacher")
 
     <li class="has_sub">
         <a href="javascript:void(0);" class="waves-effect">
-            <i class="mdi mdi-album"></i> <span>
+            <i class="mdi mdi-cards"></i> <span>
                 题目分类管理
             </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span>
         </a>
@@ -62,6 +62,17 @@ else if (ViewBag.UserRole == "Teacher")
         </ul>
     </li>
 
+    <li class="has_sub">
+        <a href="javascript:void(0);" class="waves-effect">
+            <i class="mdi mdi-content-duplicate"></i> <span>
+                推荐内容管理
+            </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span>
+        </a>
+        <ul class="list-unstyled">
+            <li><a asp-area="Teacher" asp-controller="Study" asp-action="Add">内容添加</a></li>
+            <li><a asp-area="Teacher" asp-controller="Study" asp-action="List">内容管理</a></li>
+        </ul>
+    </li>
 }
 else
 {
@@ -81,10 +92,10 @@ else
         </a>
         <ul class="list-unstyled">
             <li>
-                <a asp-area="Student" asp-controller="Problem" asp-action="List" class="waves-effect">题目集</a>
+                <a asp-controller="Problem" asp-action="List" class="waves-effect">题目集</a>
             </li>
             <li>
-                <a asp-area="Student" asp-controller="Category" asp-action="List" class="waves-effect">题目目录</a>
+                <a asp-area="Student" asp-controller="Category" asp-action="List" class="waves-effect">题目分类目录</a>
             </li>
         </ul>
     </li>
@@ -103,7 +114,7 @@ else
     </li>
 
     <li>
-        <a href="index.html" class="waves-effect">
+        <a asp-controller="Rank" asp-action="Index" class="waves-effect">
             <i class="mdi mdi-chart-areaspline"></i><span>
                 排行榜
             </span>
@@ -111,7 +122,7 @@ else
     </li>
 
     <li>
-        <a asp-controller="Status" asp-action="Index"  class="waves-effect">
+        <a asp-controller="Status" asp-action="Index" class="waves-effect">
             <i class="mdi mdi-xml"></i><span>
                 评测状态<span class="badge badge-primary pull-right">@ViewBag.StatueCount</span>
             </span>
@@ -119,16 +130,9 @@ else
     </li>
 
     <li>
-        <a href="index.html" class="waves-effect">
-            <i class="mdi mdi-message-processing"></i><span>
-                讨论<span class="badge badge-primary pull-right">1</span>
-            </span>
-        </a>
-    </li>
-    <li>
-        <a href="index.html" class="waves-effect">
-            <i class="mdi mdi-home"></i><span>
-                F.A.Q<span class="badge badge-primary pull-right">1</span>
+        <a asp-controller="FAQ" asp-action="Index" class="waves-effect">
+            <i class="mdi mdi-comment-question-outline"></i><span>
+                F.A.Q
             </span>
         </a>
     </li>

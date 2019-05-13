@@ -26,5 +26,11 @@ namespace DSAA.EntityFrameworkCore.Entity
         /// 分类题目
         /// </summary>
         public virtual List<ProblemCategory> Problems { get; set; }
+
+
+        /// <summary>
+        /// 分类课程
+        /// </summary>
+        public virtual List<LearnCategory> Learns { get; set; }
     }
 }

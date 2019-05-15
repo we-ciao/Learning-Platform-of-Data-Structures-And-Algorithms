@@ -63,7 +63,7 @@ namespace Learning_Platform_of_DSAA.Areas.Teacher.Controllers
                 if (result == null)
                 {
                     ViewBag.SweetInfo = "操作失败";
-                    return View();
+                    return View(model);
                 }
 
                 ViewBag.SweetInfo = result + "成功！";

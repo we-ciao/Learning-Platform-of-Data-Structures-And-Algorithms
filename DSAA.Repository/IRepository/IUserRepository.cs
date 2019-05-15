@@ -27,5 +27,6 @@ namespace DSAA.Repository.IRepository
         /// </summary>
         bool SignUp(User userModel);
 
+        string updateUser(User entity);
     }
 }

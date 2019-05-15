@@ -119,5 +119,27 @@ namespace DSAA.Service
         }
 
 
+        /// <summary>
+        /// 增加或修改一条用户
+        /// </summary>
+        /// <param name="entity">分类实体</param>
+        /// <returns>是否成功增加</returns>
+        public string InsertOrUpdateUser(User entity)
+        {
+            try
+            {
+                if (entity.PassWord != null)
+                    entity.PassWord = MD5Encrypt.Encrypt(entity.UserName, entity.PassWord);
+
+                var re = _userReporitory.updateUser(entity);
+                _userReporitory.Save();
+                return re;
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+        }
     }
 }

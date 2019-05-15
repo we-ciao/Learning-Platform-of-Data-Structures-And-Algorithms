@@ -39,15 +39,19 @@ namespace Learning_Platform_of_DSAA.Areas.Student.Controllers
 
 
             List<Category> list = _problemCategoryAppService.GetAllList();
-            int[] count = new int[list.Max(x => x.Id) + 1];
-
-            foreach (var item in ls)
+            int[] count = null;
+            if (list.Count > 0)
             {
-                foreach (var pr in item.FirstOrDefault().Problem.Categorys)
-                {
-                    count[pr.CategoryId]++;
-                }
+                count = new int[list.Max(x => x.Id) + 1];
 
+                foreach (var item in ls)
+                {
+                    foreach (var pr in item.FirstOrDefault().Problem.Categorys)
+                    {
+                        count[pr.CategoryId]++;
+                    }
+
+                }
             }
 
             return View(new Tuple<List<Category>, int[]>(list, count));
@@ -62,7 +66,7 @@ namespace Learning_Platform_of_DSAA.Areas.Student.Controllers
         {
             var cate = _problemCategoryAppService.Get(id);
             var sou = _solutionAppService.GetAllList()
-                .Where(x => x.User.Id == _userAppService.GetCurrentUser().Id&&x.Problem.Categorys.Any(y=>y.CategoryId== id));
+                .Where(x => x.User.Id == _userAppService.GetCurrentUser().Id && x.Problem.Categorys.Any(y => y.CategoryId == id));
             var ls = sou.GroupBy(x => x.Problem.Id);
             var ts = sou.Where(x => x.Result == ResultType.Accepted).GroupBy(x => x.Problem.Id);
             var prob = cate.Problems;

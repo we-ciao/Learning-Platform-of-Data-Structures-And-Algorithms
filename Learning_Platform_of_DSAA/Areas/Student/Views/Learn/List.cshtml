@@ -1,0 +1,40 @@
+﻿@model IEnumerable<DSAA.EntityFrameworkCore.Entity.Learn>
+
+@{
+    ViewData["Title"] = "推荐内容";
+    System.Text.StringBuilder sb = new System.Text.StringBuilder();
+    int i = 0;
+    for (; i < Model.Count(); i++)
+    {
+        if (i % 3 == 0)
+        {
+            sb.Append("<div class=\"row\">");
+        }
+        sb.Append("<div class=\"col-lg-4\"><a href=\"Show/" + Model.ElementAt(i).Id + "\" style=\"color: inherit; \"><div class=\"panel panel-default\"><div class=\"panel-heading\"><h3 class=\"panel-title\">" + Model.ElementAt(i).Title + "</h3></div><div class=\"panel-body\"><p>" + Model.ElementAt(i).Info + "</p></div></div></a></div>");
+
+        if (i % 3 == 2)
+        {
+            sb.Append("</div>");
+        }
+    }
+    if (i % 3 != 0)
+    {
+        sb.Append("</div>");
+    }
+}
+
+<div class="">
+    <div class="page-header-title">
+        <h4 class="page-title">@ViewData["Title"]</h4>
+    </div>
+</div>
+
+<div class="page-content-wrapper ">
+
+    <div class="container">
+        @Html.Raw(sb.ToString())
+
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

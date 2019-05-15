@@ -46,5 +46,15 @@ namespace DSAA.Repository
             }
         }
 
+
+
+        public string updateUser(User entity)
+        {
+            if (entity.PassWord == null)
+                entity.PassWord = _dbContext.Uesrs.Where(x => x.Id == entity.Id).Select(x => x.PassWord).FirstOrDefault();
+            Update(entity);
+            return "更新";
+        }
+
     }
 }

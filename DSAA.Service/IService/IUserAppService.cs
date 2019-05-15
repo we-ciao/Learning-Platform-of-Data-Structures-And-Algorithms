@@ -25,5 +25,11 @@ namespace DSAA.Service.IService
         /// 获取当前登陆的用户名
         /// </summary>
         String GetCurrentUserName();
+
+
+        /// <summary>
+        /// 增加或修改一条用户
+        /// </summary>
+        string InsertOrUpdateUser(User entity);
     }
 }

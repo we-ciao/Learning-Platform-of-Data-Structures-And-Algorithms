@@ -1,0 +1,24 @@
+﻿@model DSAA.EntityFrameworkCore.Entity.Learn
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="">
+    <div class="page-header-title">
+        <h4 class="page-title">@ViewData["Title"]</h4>
+    </div>
+</div>
+
+<div class="page-content-wrapper ">
+
+    <div class="container text-center" >
+        <frame style="height:100%;width:100%; position:relative;border:none;text-align:center">
+
+            @Html.Raw(Model.Content)
+
+        </frame>
+
+    </div><!-- container -->
+
+</div> <!-- Page content Wrapper -->

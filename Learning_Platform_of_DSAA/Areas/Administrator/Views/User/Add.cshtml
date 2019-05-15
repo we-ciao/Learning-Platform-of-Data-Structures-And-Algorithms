@@ -1,0 +1,112 @@
+﻿@model DSAA.EntityFrameworkCore.Entity.User
+
+@{
+    ViewData["Title"] = "修改信息";
+}
+
+<div class="">
+    <div class="page-header-title">
+        <h4 class="page-title">@ViewData["Title"] </h4>
+    </div>
+</div>
+
+<div class="page-content-wrapper ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-body">
+                                        <address>
+                                            1. 您可以在本页添加或修改用户信息，本页标记<span class="star">*</span>的为必填项。
+                                        </address>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+
+                                <div class="panel-body">
+
+
+                                    <form asp-controller="Problem" asp-action="Add" cmethod="post" class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"><span class="star">*</span>用户名</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" asp-for="UserName" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"><span class="star">*</span>密码</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" name="PassWord">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"><span class="star">*</span>昵称</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" asp-for="NickName" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">电子邮箱</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" asp-for="Email">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">手机号</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" asp-for="Phone">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"><span class="star">*</span>部门</label>
+                                            <div class="col-md-10">
+                                                <select id="Group" name="Group" class="form-control">
+                                                    @foreach (var item in ViewBag.groups)
+                                                    {
+                                                        <option value="@item.Id">@item.GroupName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-10 control-label"></label>
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                提交
+                                            </button>
+                                            <button type="reset" class="btn btn-default waves-effect m-l-5" onclick="Cancel()">
+                                                取消
+                                            </button>
+                                        </div>
+
+                                    </form>
+                                </div> <!-- panel-body -->
+                            </div>
+                        </div> <!-- end row -->
+                    </div> <!-- panel body -->
+                </div> <!-- end panel -->
+
+            </div> <!-- end col -->
+
+        </div>
+        <!-- end row -->
+
+
+    </div><!-- container -->
+</div> <!-- Page content Wrapper -->
+
+
+<script>
+    function Cancel() {
+        window.location.href = "/Administrator/User";
+
+    }
+
+    $(document).ready(function () {
+        $("#Group").val("@(Model.Group==null? -1 : Model.Group.Id)");
+    });
+</script>

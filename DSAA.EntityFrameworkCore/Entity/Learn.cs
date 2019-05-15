@@ -10,6 +10,17 @@ namespace DSAA.EntityFrameworkCore.Entity
     /// </summary>
     public class Learn : Entity
     {
+        /// <summary>
+        /// 获取或设置名称
+        /// </summary>
+        [DisplayName("名称")]
+        public String Title { get; set; }
+
+        /// <summary>
+        /// 描述
+        /// </summary>
+        [DisplayName("描述")]
+        public String Info { get; set; }
 
         /// <summary>
         /// 源内容

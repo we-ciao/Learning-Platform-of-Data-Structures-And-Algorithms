@@ -7,25 +7,27 @@
             </span>
         </a>
     </li>
-    <li>
-        <a href="index.html" class="waves-effect">
-            <i class="mdi mdi-home"></i><span>
-                网站公告管理<span class="badge badge-primary pull-right">1</span>
-            </span>
-        </a>
-    </li>
+
+
     <li class="has_sub">
         <a href="javascript:void(0);" class="waves-effect">
-            <i class="mdi mdi-album"></i> <span>
-                学校信息管理
+            <i class="mdi mdi-contact-mail"></i> <span>
+                分组信息维护
             </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span>
         </a>
         <ul class="list-unstyled">
-            <li><a href="ui-components.html">分组信息维护</a></li>
-            <li><a href="ui-buttons.html">用户角色维护</a></li>
+            <li><a asp-area="Administrator" asp-controller="Group" asp-action="Add">题目信息添加</a></li>
+            <li><a asp-area="Administrator" asp-controller="Group" asp-action="Index">分组信息管理</a></li>
         </ul>
     </li>
 
+    <li>
+        <a asp-area="Administrator" asp-controller="User" asp-action="Index" class="waves-effect">
+            <i class="mdi mdi-human"></i> <span>
+                用户角色维护
+            </span>
+        </a>
+    </li>
 }
 else if (ViewBag.UserRole == "Teacher")
 {
@@ -69,8 +71,8 @@ else if (ViewBag.UserRole == "Teacher")
             </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span>
         </a>
         <ul class="list-unstyled">
-            <li><a asp-area="Teacher" asp-controller="Study" asp-action="Add">内容添加</a></li>
-            <li><a asp-area="Teacher" asp-controller="Study" asp-action="List">内容管理</a></li>
+            <li><a asp-area="Teacher" asp-controller="Learn" asp-action="Add">内容添加</a></li>
+            <li><a asp-area="Teacher" asp-controller="Learn" asp-action="List">内容管理</a></li>
         </ul>
     </li>
 }
@@ -100,17 +102,12 @@ else
         </ul>
     </li>
 
-    <li class="has_sub">
-        <a href="javascript:void(0);" class="waves-effect">
+    <li>
+        <a asp-area="Student" asp-controller="Learn" asp-action="List" class="waves-effect">
             <i class="mdi mdi-album"></i> <span>
                 在线学习
-            </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span>
+            </span>
         </a>
-        <ul class="list-unstyled">
-            <li><a href="ui-components.html">Current Contest</a></li>
-            <li><a href="ui-buttons.html">Passed Contest</a></li>
-            <li><a href="ui-buttons.html">Recent Contest</a></li>
-        </ul>
     </li>
 
     <li>

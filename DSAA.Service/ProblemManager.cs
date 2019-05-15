@@ -294,7 +294,7 @@ namespace DSAA.Service
                 file.CopyTo(stream);
             }
 
-            return string.Format("Admin upload problem data, id = {0}", problemID.ToString());
+            return string.Format("上传题目数据成功, id = {0}", problemID.ToString());
         }
 
         /// <summary>

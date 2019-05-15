@@ -9,7 +9,7 @@ namespace Learning_Platform_of_DSAA.Areas.Student.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index","FAQ");
         }
     }
 }

@@ -72,13 +72,13 @@ namespace DSAA.EntityFrameworkCore.Entity
         /// <summary>
         /// 注册时间
         /// </summary>
-        public DateTime CreateDate { get; set; } = DateTime.Now;
+        public DateTime CreateDate { get; set; } 
 
 
         /// <summary>
         /// 最后登录时间
         /// </summary>
-        public DateTime LastDate { get; set; }
+        public DateTime LastDate { get; set; } = DateTime.Now;
 
         /// <summary>
         /// 用户排名

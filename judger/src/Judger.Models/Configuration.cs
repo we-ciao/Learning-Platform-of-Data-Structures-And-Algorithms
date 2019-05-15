@@ -38,17 +38,17 @@ namespace Judger.Models
         /// <summary>
         /// 取回判题任务接口URL
         /// </summary>
-        public string TaskFetchUrl { get; set; } = "http://localhost:8000/judge/GetPending";
+        public string TaskFetchUrl { get; set; } = "http://localhost:8080/judge/GetPending";
 
         /// <summary>
         /// 取回测试数据接口URL
         /// </summary>
-        public string TestDataFetchUrl { get; set; } = "http://localhost:8000/judge/GetProblem";
+        public string TestDataFetchUrl { get; set; } = "http://localhost:8080/judge/GetProblem";
 
         /// <summary>
         /// 提交判题结果接口URL
         /// </summary>
-        public string ResultSubmitUrl { get; set; } = "http://localhost:8000/judge/UpdateStatus";
+        public string ResultSubmitUrl { get; set; } = "http://localhost:8080/judge/UpdateStatus";
 
         /// <summary>
         /// 测试数据存放目录

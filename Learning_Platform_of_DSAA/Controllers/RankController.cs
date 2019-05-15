@@ -22,7 +22,7 @@ namespace Learning_Platform_of_DSAA.Controllers
         {
             List<User> list = _userAppService.GetAllList();
 
-            return View(list);
+            return View(list.Where(x => x.Group == null || (x.Group != null && x.Group.Permission == PermissionType.Student)));
         }
     }
 }

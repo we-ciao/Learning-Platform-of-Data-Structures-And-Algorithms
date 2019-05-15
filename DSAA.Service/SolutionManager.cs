@@ -35,6 +35,7 @@ namespace DSAA.Service
         //用户管理仓储接口
         private readonly IUserAppService _userAppService;
         private readonly ISolutionRepository _solutionReporitory;
+        private readonly IProblemRepository _problemReporitory;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IConfiguration _configuration;
 
@@ -42,12 +43,13 @@ namespace DSAA.Service
         /// 构造函数 实现依赖注入
         /// </summary>
         /// <param name="userRepository">仓储对象</param>
-        public SolutionManager(IHttpContextAccessor httpContextAccessor, IUserAppService userAppService, ISolutionRepository solutionReporitory, IConfiguration configuration) : base(solutionReporitory)
+        public SolutionManager(IHttpContextAccessor httpContextAccessor, IProblemRepository problemReporitory, IUserAppService userAppService, ISolutionRepository solutionReporitory, IConfiguration configuration) : base(solutionReporitory)
         {
             _userAppService = userAppService;
             _solutionReporitory = solutionReporitory;
             _httpContextAccessor = httpContextAccessor;
             _configuration = configuration;
+            _problemReporitory = problemReporitory;
         }
 
 
@@ -76,11 +78,22 @@ namespace DSAA.Service
 
             entity.User = _userAppService.GetCurrentUser();
             entity.SubmitTime = DateTime.Now;
+            entity.CodeLength = entity.SourceCode.Length;
             //entity.SubmitIP = userip;
 
             _solutionReporitory.Insert(entity);
             Boolean success = _solutionReporitory.Save() > 0;
-
+            if (success)
+            {
+                var pro = entity.Problem;
+                pro.SubmitCount++;
+                _problemReporitory.Update(pro);
+                _problemReporitory.Save();
+                var user = entity.User;
+                user.SubmitCount++;
+                _userAppService.Update(user);
+                _userAppService.Save();
+            }
             return success ? null : "提交失败";
         }
 
@@ -112,6 +125,16 @@ namespace DSAA.Service
             lock (_updateLock)
             {
                 entity.JudgeTime = DateTime.Now;
+
+                if (entity.Result==ResultType.Accepted)
+                {
+                    var pro = entity.Problem;
+                    pro.SolvedCount++;
+                    _problemReporitory.Update(pro);
+                    var user = entity.User;
+                    user.SolvedCount++;
+                    _userAppService.Update(user);
+                }
                 _solutionReporitory.Update(entity);
                 if (_solutionReporitory.Save() > 0)
                 {

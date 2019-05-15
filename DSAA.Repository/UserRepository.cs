@@ -52,6 +52,7 @@ namespace DSAA.Repository
         {
             if (entity.PassWord == null)
                 entity.PassWord = _dbContext.Uesrs.Where(x => x.Id == entity.Id).Select(x => x.PassWord).FirstOrDefault();
+            entity.CreateDate = _dbContext.Uesrs.Where(x => x.Id == entity.Id).Select(x => x.CreateDate).FirstOrDefault();
             Update(entity);
             return "更新";
         }

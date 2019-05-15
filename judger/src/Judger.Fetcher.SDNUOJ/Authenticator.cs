@@ -21,7 +21,7 @@ namespace Judger.Fetcher.SDNUOJ
 
         private HttpWebClient _webClient = ConfiguredClient.Create();
         private Configuration _config = ConfigManager.Config;
-        private string loginUrl = "http://localhost:8000/judge/login";
+        private string loginUrl = "http://localhost:8080/judge/login";
 
         private Authenticator()
         {
